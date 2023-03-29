@@ -10,8 +10,7 @@
 <link href="InstaDeep_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.294">
 
-  <meta name="author" content="John Doe">
-  <title>Habits</title>
+  <title>Antibody-antigen Docking and Design via Hierarchical Equivariant Refinement Networks (HERN)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -34,6 +33,8 @@
   <link href="InstaDeep_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="InstaDeep_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="InstaDeep_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="InstaDeep_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="InstaDeep_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
   <link href="InstaDeep_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
@@ -319,40 +320,248 @@
       margin-right: 0; 
     }
   </style>
+  <script src="InstaDeep_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="InstaDeep_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="InstaDeep_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 </head>
 <body class="quarto-light">
   <div class="reveal">
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Habits</h1>
+  <h1 class="title">Antibody-antigen Docking and Design via Hierarchical Equivariant Refinement Networks (HERN)</h1>
+  <p class="subtitle">Presentation created by <b>Pejvak Moghimi</b> for InstaDeep</p>
 
 <div class="quarto-title-authors">
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-John Doe 
+</div>
+
+</section>
+<section id="background-and-motivations" class="title-slide slide level1 center">
+<h1>Background and Motivations</h1>
+<div>
+<ul>
+<li>PhD in machine learning and immunoinformatics
+<ul>
+<li>Deep noisy long-tailed learning of antibody convergence across AIRRs</li>
+</ul></li>
+</ul>
+</div>
+</section>
+
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+<ul>
+<li class="fragment">Antibodies, Paratopes, Epitopes and docking</li>
+<li class="fragment">Graph Neural Networks (GNNs)</li>
+<li class="fragment">Message Passing in GNNs</li>
+</ul>
+</section>
+<section id="antibodies-paratopes-epitopes-and-docking" class="slide level2">
+<h2>Antibodies, Paratopes, Epitopes and docking</h2>
+<ul>
+<li class="fragment">Antibodies are Y-shaped proteins that bind to antigens.</li>
+<li class="fragment">The antigen-binding site is called the paratope.</li>
+<li class="fragment">The binding region of the antigen is called the epitope.</li>
+<li class="fragment">Docking is the process of finding the best binding pose of a paratope to an epitope.</li>
+</ul>
+</section>
+<section id="docking" class="slide level2">
+<h2>Docking</h2>
+<div>
+<p><img data-src="HADDOCKanimation_of_rigid-body_minimization.gif" class="absolute fragment quarto-discovered-preview-image" style="bottom: 110px; right: 130px; width: 300px; "></p>
+<p><img data-src="haddock_animation_of_refinement_in_explicit_solvent_water.gif" class="absolute" style="top: 170px; left: 30px; width: 400px; height: 400px; "></p>
+<p><img data-src="haddock_animation_of_semi-flexible_simulated_annealing.gif" class="absolute fragment" style="top: 150px; right: 80px; width: 450px; "></p>
+</div>
+<div class="footer">
+<p>Curtesy of Bonvin lab: <a href="https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/">HADDOCK2.4 Antibody - Antigen tutorial</a></p>
+</div>
+</section>
+<section id="pipeline-1" class="slide level2">
+<h2>Pipeline 1</h2>
+<div class="cell" data-reveal="true">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+    A(Datasets) --&gt; B(Processing)
+    B --&gt; C1(Training Set)
+    B --&gt; C2(Validation Set)
+    B --&gt; C3(Test Set)
+    C1 --&gt; D1(RefineDocker Model Training)
+    C2 --&gt; D2(RefineDocker Model Validation)
+    C3 --&gt; D3(RefineDocker Model Testing)
+    D1 --&gt; E(Model Checkpoint)
+    F(Predict.py) --&gt; G(Prediction)
+    E --&gt; G
+    G --&gt; H(OpenMM Relaxation)
+    H --&gt; I(Refined Complex Structures)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipeline-2" class="slide level2">
+<h2>Pipeline 2</h2>
+<div class="cell" data-reveal="true">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+A[Input Data] --&gt; B[EGNNEncoder]
+B --&gt; B4[Readout]
+B4 --&gt; C[Select Target]
+C --&gt; D[UncondRefineDecoder]
+D --&gt; E[SequenceDecoder]
+E --&gt; F[Output Data]
+
+subgraph EGNNEncoder
+    B1[Node Features] --&gt; B2[Conv Layers]
+    B3[Edge Features] --&gt; B2
+    B2 --&gt; B4
+end
+
+subgraph UncondRefineDecoder
+    D1[Initial Coords] --&gt; D2[Iterative Refinement]
+    D3[Initial Residues] --&gt; D4[Predict Residue]
+    D2 --&gt; D5[Struct Loss]
+    D4 --&gt; D5
+    D5 --&gt; D
+end
+
+subgraph SequenceDecoder
+    E1[Encode Target] --&gt; E2[SRUpp RNN]
+    E2 --&gt; E3[Attention Mechanism]
+    E3 --&gt; E4[Sequence Prediction]
+    E4 --&gt; E
+end
+
+subgraph DataProcessing
+    DP1[Raw Datasets] --&gt; DP2[process_data.py]
+    DP2 --&gt; DP3[Training, Validation, Test Sets]
+end
+
+subgraph ModelTraining
+    MT1[Training Set] --&gt; MT2[Train RefineDocker]
+    MT3[Validation Set] --&gt; MT4[Validate RefineDocker]
+    MT2 --&gt; MT5[Best Model Checkpoint]
+    MT4 --&gt; MT5
+end
+
+subgraph Prediction
+    PR1[Test Set] --&gt; PR2[predict.py]
+    PR3[Model Checkpoint] --&gt; PR2
+    PR2 --&gt; PR4[Predicted Structures]
+end
+
+subgraph Relaxation
+    RL1[Predicted Structures] --&gt; RL2[OpenMM Relaxation]
+    RL2 --&gt; RL3[Refined Complex Structures]
+end
+
+style B fill:#f9d,stroke:#333,stroke-width:2px
+style D fill:#9cf,stroke:#333,stroke-width:2px
+style E fill:#fc9,stroke:#333,stroke-width:2px
+style DP2 fill:#f96,stroke:#333,stroke-width:2px
+style MT2 fill:#9f9,stroke:#333,stroke-width:2px
+style PR2 fill:#6cf,stroke:#333,stroke-width:2px
+style RL2 fill:#c9f,stroke:#333,stroke-width:2px
+
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipeline-3" class="slide level2">
+<h2>Pipeline 3</h2>
+<div class="cell" data-reveal="true">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+A[Input Data] --&gt; B[EGNNEncoder]
+B --&gt; C[Select Target]
+C --&gt; D[UncondRefineDecoder]
+D --&gt; E[SequenceDecoder]
+E --&gt; F[Output Data]
+
+subgraph EGNNEncoder
+    B1[Node Features] --&gt; B2[Conv Layers]
+    B3[Edge Features] --&gt; B2
+    B2 --&gt; B4[Readout]
+end
+
+subgraph UncondRefineDecoder
+    D1[Initial Coords] --&gt; D2[Iterative Refinement]
+    D3[Initial Residues] --&gt; D4[Predict Residue]
+    D2 --&gt; D5[Struct Loss]
+    D4 --&gt; D5
+    D5 --&gt; D
+end
+
+subgraph SequenceDecoder
+    E1[Encode Target] --&gt; E2[SRUpp RNN]
+    E2 --&gt; E3[Attention Mechanism]
+    E3 --&gt; E4[Sequence Prediction]
+    E4 --&gt; E
+end
+
+style B fill:#f9d,stroke:#333,stroke-width:2px
+style D fill:#9cf,stroke:#333,stroke-width:2px
+style E fill:#fc9,stroke:#333,stroke-width:2px
+</pre>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipeline-4" class="slide level2">
+<h2>Pipeline 4</h2>
+<div class="cell" data-reveal="true">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">graph TD
+A[Antibody-Antigen-Complex Data] --&gt; B[Graph-based Encoding]
+B --&gt; C[Target Selection]
+C --&gt; D[3D Structure Refinement]
+D --&gt; E[Protein Sequence Prediction]
+E --&gt; F[Refined 3D Structure &amp; Predicted Sequence]
+
+subgraph Graph-based Encoding
+    B1[Node &amp; Edge Features] --&gt; B2[Graph Convolution Layers]
+    B2 --&gt; B3[Encoded Representation]
+end
+
+subgraph 3D Structure Refinement
+    D1[Initial Coordinates] --&gt; D2[Iterative Coordinate Refinement]
+    D3[Residue Information] --&gt; D4[Residue Prediction]
+    D2 --&gt; D5[Loss Calculation]
+    D4 --&gt; D5
+    D5 --&gt; D
+end
+
+subgraph Paratope Sequence Prediction
+    E1[Encoded Target] --&gt; E2[Recurrent Neural Network]
+    E2 --&gt; E3[Attention Mechanism]
+    E3 --&gt; E
+end
+
+style B fill:#f9d,stroke:#333,stroke-width:2px
+style D fill:#9cf,stroke:#333,stroke-width:2px
+style E fill:#fc9,stroke:#333,stroke-width:2px
+</pre>
+</div>
 </div>
 </div>
 </div>
 
-</section>
-<section id="getting-up" class="slide level2">
-<h2>Getting up</h2>
-<ul>
-<li>Turn off alarm</li>
-<li>Get out of bed</li>
-</ul>
-</section>
-<section id="going-to-sleep" class="slide level2">
-<h2>Going to sleep</h2>
-<ul>
-<li>Get in bed</li>
-<li>Count sheep</li>
-</ul>
-<div class="footer footer-default">
-
+<img src="InstaDeep_logo.PNG" class="slide-logo r-stretch"><div class="footer footer-default">
+<p><a href="https://github.com/Peji-moghimi/sciprez" class="uri">https://github.com/Peji-moghimi/sciprez</a></p>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -363,6 +572,7 @@ John Doe
   <script src="InstaDeep_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
   <script src="InstaDeep_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
   <script src="InstaDeep_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="InstaDeep_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
   <script src="InstaDeep_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
@@ -384,7 +594,8 @@ John Doe
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -405,7 +616,7 @@ John Doe
         progress: true,
 
         // Display the page number of the current slide
-        slideNumber: false,
+        slideNumber: 'c/t',
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -507,7 +718,7 @@ John Doe
         hideCursorTime: 5000,
 
         // Opens links in an iframe preview overlay
-        previewLinks: false,
+        previewLinks: true,
 
         // Transition style (none/fade/slide/convex/concave/zoom)
         transition: 'none',
@@ -555,7 +766,7 @@ John Doe
         },
 
         // reveal.js plugins
-        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
 
           RevealMath,
           RevealNotes,

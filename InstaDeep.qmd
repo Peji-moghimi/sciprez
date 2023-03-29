@@ -1,15 +1,197 @@
 ---
-title: "Habits"
-author: "John Doe"
-format: revealjs
+title: "Antibody-antigen Docking and Design via Hierarchical Equivariant Refinement Networks (HERN)"
+subtitle: "Presentation created by <b>Pejvak Moghimi</b> for InstaDeep"
+format:
+  revealjs:
+    incremental: true   
+    slide-number: true
+    chalkboard: 
+      buttons: true
+    preview-links: true
+    logo: InstaDeep_logo.PNG
+    footer: <https://github.com/Peji-moghimi/sciprez>
+resources:
+  - HERN_presentation.pdf
 ---
 
-## Getting up
+# Background and Motivations
+::: nonincremental
+  - PhD in machine learning and immunoinformatics
+    - Deep noisy long-tailed learning of antibody convergence across AIRRs
+:::
 
-- Turn off alarm
-- Get out of bed
+# Introduction
 
-## Going to sleep
+  - Antibodies, Paratopes, Epitopes and docking
+  - Graph Neural Networks (GNNs)
+  - Message Passing in GNNs
 
-- Get in bed
-- Count sheep
+
+## Antibodies, Paratopes, Epitopes and docking
+  
+  - Antibodies are Y-shaped proteins that bind to antigens.
+  - The antigen-binding site is called the paratope.
+  - The binding region of the antigen is called the epitope.
+  - Docking is the process of finding the best binding pose of a paratope to an epitope.
+
+## Docking
+::: nonincremental
+![](HADDOCKanimation_of_rigid-body_minimization.gif){.absolute .fragment bottom="110" right="130" width="300"}
+
+![](haddock_animation_of_refinement_in_explicit_solvent_water.gif){.absolute top="170" left="30" width="400" height="400"}
+
+![](haddock_animation_of_semi-flexible_simulated_annealing.gif){.absolute .fragment top="150" right="80" width="450"}
+:::
+
+::: footer
+Curtesy of Bonvin lab: [HADDOCK2.4 Antibody - Antigen tutorial](https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/)
+:::
+
+## Pipeline 1 
+```{mermaid}
+graph TD
+    A(Datasets) --> B(Processing)
+    B --> C1(Training Set)
+    B --> C2(Validation Set)
+    B --> C3(Test Set)
+    C1 --> D1(RefineDocker Model Training)
+    C2 --> D2(RefineDocker Model Validation)
+    C3 --> D3(RefineDocker Model Testing)
+    D1 --> E(Model Checkpoint)
+    F(Predict.py) --> G(Prediction)
+    E --> G
+    G --> H(OpenMM Relaxation)
+    H --> I(Refined Complex Structures)
+```
+
+## Pipeline 2
+```{mermaid}
+graph TD
+A[Input Data] --> B[EGNNEncoder]
+B --> B4[Readout]
+B4 --> C[Select Target]
+C --> D[UncondRefineDecoder]
+D --> E[SequenceDecoder]
+E --> F[Output Data]
+
+subgraph EGNNEncoder
+    B1[Node Features] --> B2[Conv Layers]
+    B3[Edge Features] --> B2
+    B2 --> B4
+end
+
+subgraph UncondRefineDecoder
+    D1[Initial Coords] --> D2[Iterative Refinement]
+    D3[Initial Residues] --> D4[Predict Residue]
+    D2 --> D5[Struct Loss]
+    D4 --> D5
+    D5 --> D
+end
+
+subgraph SequenceDecoder
+    E1[Encode Target] --> E2[SRUpp RNN]
+    E2 --> E3[Attention Mechanism]
+    E3 --> E4[Sequence Prediction]
+    E4 --> E
+end
+
+subgraph DataProcessing
+    DP1[Raw Datasets] --> DP2[process_data.py]
+    DP2 --> DP3[Training, Validation, Test Sets]
+end
+
+subgraph ModelTraining
+    MT1[Training Set] --> MT2[Train RefineDocker]
+    MT3[Validation Set] --> MT4[Validate RefineDocker]
+    MT2 --> MT5[Best Model Checkpoint]
+    MT4 --> MT5
+end
+
+subgraph Prediction
+    PR1[Test Set] --> PR2[predict.py]
+    PR3[Model Checkpoint] --> PR2
+    PR2 --> PR4[Predicted Structures]
+end
+
+subgraph Relaxation
+    RL1[Predicted Structures] --> RL2[OpenMM Relaxation]
+    RL2 --> RL3[Refined Complex Structures]
+end
+
+style B fill:#f9d,stroke:#333,stroke-width:2px
+style D fill:#9cf,stroke:#333,stroke-width:2px
+style E fill:#fc9,stroke:#333,stroke-width:2px
+style DP2 fill:#f96,stroke:#333,stroke-width:2px
+style MT2 fill:#9f9,stroke:#333,stroke-width:2px
+style PR2 fill:#6cf,stroke:#333,stroke-width:2px
+style RL2 fill:#c9f,stroke:#333,stroke-width:2px
+
+```
+
+## Pipeline 3
+```{mermaid}
+graph TD
+A[Input Data] --> B[EGNNEncoder]
+B --> C[Select Target]
+C --> D[UncondRefineDecoder]
+D --> E[SequenceDecoder]
+E --> F[Output Data]
+
+subgraph EGNNEncoder
+    B1[Node Features] --> B2[Conv Layers]
+    B3[Edge Features] --> B2
+    B2 --> B4[Readout]
+end
+
+subgraph UncondRefineDecoder
+    D1[Initial Coords] --> D2[Iterative Refinement]
+    D3[Initial Residues] --> D4[Predict Residue]
+    D2 --> D5[Struct Loss]
+    D4 --> D5
+    D5 --> D
+end
+
+subgraph SequenceDecoder
+    E1[Encode Target] --> E2[SRUpp RNN]
+    E2 --> E3[Attention Mechanism]
+    E3 --> E4[Sequence Prediction]
+    E4 --> E
+end
+
+style B fill:#f9d,stroke:#333,stroke-width:2px
+style D fill:#9cf,stroke:#333,stroke-width:2px
+style E fill:#fc9,stroke:#333,stroke-width:2px
+```
+
+## Pipeline 4
+```{mermaid}
+graph TD
+A[Antibody-Antigen-Complex Data] --> B[Graph-based Encoding]
+B --> C[Epitope Selection]
+C --> D[3D Structure Refinement]
+D --> E[Paratope Sequence Prediction]
+E --> F[Refined 3D Structure & Predicted Sequence]
+
+subgraph Graph-based Encoding
+    B1[Node & Edge Features] --> B2[Graph Convolution Layers]
+    B2 --> B3[Encoded Representation]
+end
+
+subgraph 3D Structure Refinement
+    D1[Initial Coordinates] --> D2[Iterative Coordinate Refinement]
+    D3[Residue Information] --> D4[Residue Prediction]
+    D2 --> D5[Loss Calculation]
+    D4 --> D5
+    D5 --> D
+end
+
+subgraph Paratope Sequence Prediction
+    E1[Encoded Epitope] --> E2[Recurrent Neural Network]
+    E2 --> E3[Attention Mechanism]
+    E3 --> E
+end
+
+style B fill:#f9d,stroke:#333,stroke-width:2px
+style D fill:#9cf,stroke:#333,stroke-width:2px
+style E fill:#fc9,stroke:#333,stroke-width:2px
+```
