@@ -8,7 +8,7 @@ format:
     chalkboard: 
       buttons: true
     preview-links: true
-    logo: InstaDeep_logo.PNG
+    logo: HERN_files/images/InstaDeep_logo.PNG
     footer: <https://github.com/Peji-moghimi/sciprez>
 resources:
   - HERN_presentation.pdf
@@ -36,11 +36,11 @@ resources:
 
 ## Docking
 ::: nonincremental
-![](HADDOCKanimation_of_rigid-body_minimization.gif){.absolute .fragment bottom="110" right="130" width="300"}
+![](HERN_files/images/HADDOCKanimation_of_rigid-body_minimization.gif){.absolute .fragment bottom="110" right="130" width="300"}
 
-![](haddock_animation_of_refinement_in_explicit_solvent_water.gif){.absolute top="170" left="30" width="400" height="400"}
+![](HERN_files/images/haddock_animation_of_refinement_in_explicit_solvent_water.gif){.absolute top="170" left="30" width="400" height="400"}
 
-![](haddock_animation_of_semi-flexible_simulated_annealing.gif){.absolute .fragment top="150" right="80" width="450"}
+![](HERN_files/images/haddock_animation_of_semi-flexible_simulated_annealing.gif){.absolute .fragment top="150" right="80" width="450"}
 :::
 
 ::: footer
