@@ -357,24 +357,324 @@
 <li class="fragment">Message Passing in GNNs</li>
 </ul>
 </section>
-<section id="antibodies-paratopes-epitopes-and-docking" class="slide level2">
+<section id="antibodies-paratopes-epitopes-and-docking" class="slide level2" data-background-color="black" data-background-image="HERN_files/images/figure_antibody_structure_cropped.png" data-background-size="550px" data-background-repeat="repeat" data-background-opacity="0.3">
 <h2>Antibodies, Paratopes, Epitopes and docking</h2>
 <ul>
 <li class="fragment">Antibodies are Y-shaped proteins that bind to antigens.</li>
 <li class="fragment">The antigen-binding site is called the paratope.</li>
 <li class="fragment">The binding region of the antigen is called the epitope.</li>
-<li class="fragment">Docking is the process of finding the best binding pose of a paratope to an epitope.</li>
+<li class="fragment">Docking is the process of finding the best binding pose of a paratope to an epitope. <img data-src="HERN_files/images/figure_antibody_binding.PNG" class="absolute fragment fade-in-then-out quarto-discovered-preview-image" style="bottom: 10px; right: 1050px; width: 225px; "></li>
 </ul>
+</section>
+<section id="molecules-as-graphs" class="slide level2">
+<h2>Molecules as Graphs</h2>
+<ul>
+<li class="fragment">The nodes in the graph represent the atoms of the molecule.</li>
+<li class="fragment">The edges represent the bonds between the atoms.</li>
+<li class="fragment">The graph structure captures the spatial information of the molecule.</li>
+</ul>
+</section>
+<section id="section" class="slide level2" data-background-color="white">
+<h2></h2>
+<p><img data-src="HERN_files/images/caffeine/1680175220705.jpg" class="absolute fragment fade-in-then-out" style="bottom: 50px; right: 30px; width: 900px; "></p>
+<p><img data-src="HERN_files/images/caffeine/1680175220679.png" class="absolute fragment" style="bottom: 50px; right: 30px; width: 900px; "></p>
+<p><img data-src="HERN_files/images/caffeine/caffeine_cartoon_molecule.png" class="absolute fragment" style="bottom: 50px; right: 30px; width: 900px; "></p>
+</section>
+<section id="graph-neural-networks-gnns" class="slide level2">
+<h2>Graph Neural Networks (GNNs)</h2>
+<ul>
+<li class="fragment"><p>GNNs are a class of neural networks, based on the idea of message passing, that operate on graph-structured data.</p></li>
+<li class="fragment"><p>GNNs have been successfully applied to protein design, molecular docking, drug design, and protein-protein interaction, and other applications.</p></li>
+<li class="fragment"><p>GNNs can be used to model complex molecular interactions.</p>
+<ul>
+<li class="fragment">The atoms (nodes/vertices) of the molecular graph can be represented by a set of features, and the bonds (edges) can also be represented by a set of features.</li>
+<li class="fragment">The features of the atoms and bonds can be updated by message passing.</li>
+</ul></li>
+</ul>
+</section>
+<section id="message-passing-in-gnns" class="slide level2">
+<h2>Message Passing in GNNs</h2>
+<ul>
+<li class="fragment">Message passing is the process of propagating information through a graph.</li>
+<li class="fragment">Defines nodes’ and/or edges’ features in terms of the neighbouring nodes’ and/or edges’ features.</li>
+<li class="fragment">The message passing is performed in different ways, multiple times in parallel and a hierarchical manner.</li>
+<li class="fragment">Nodes’ (Atoms) and edges’ (bonds) features are updated through message passing, resulting in an embedding representation that captures the global and/or local spatial information of the molecule.</li>
+<li class="fragment">It can be used in both supervised and unsupervised learning.</li>
+</ul>
+</section>
+<section id="message-passing-in-gnns-1" class="slide level2 scrollable">
+<h2>Message Passing in GNNs</h2>
+<ul>
+<li class="fragment">The message passing process in GNNs is based on the following equation: <span class="math display">\[
+  \mathbf{h}_i^{\left(t+1\right)} = \sigma\left(\mathbf{W}_h\mathbf{h}_i^{\left(t\right)} + \sum_{j\in \mathcal{N}(i)} \mathbf{W}_e \mathbf{e}_{ij}^{\left(t\right)}\right)
+  \]</span></li>
+<li class="fragment">Where <span class="math inline">\(\mathbf{h}_i^{\left(t\right)}\)</span> is the node feature vector at time <span class="math inline">\(t\)</span> for node <span class="math inline">\(i\)</span>, where time is the number of message passing steps.</li>
+<li class="fragment"><span class="math inline">\(\mathbf{W}_h\)</span> is the weight matrix for the node features.</li>
+<li class="fragment"><span class="math inline">\(\mathbf{e}_{ij}^{\left(t\right)}\)</span> is the edge feature vector at time <span class="math inline">\(t\)</span> between node <span class="math inline">\(i\)</span> and node <span class="math inline">\(j\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\mathbf{W}_e\)</span> is the weight matrix for the edge features.</li>
+<li class="fragment"><span class="math inline">\(\mathcal{N}(i)\)</span> is the set of neighbors of node <span class="math inline">\(i\)</span>.</li>
+<li class="fragment"><span class="math inline">\(\sigma\)</span> is the activation function.</li>
+</ul>
+</section>
+<section id="message-passing-in-gnns-2" class="slide level2">
+<h2>Message Passing in GNNs</h2>
+<ul>
+<li class="fragment">Message passing steps are as follows:
+<ul>
+<li class="fragment">Reading the node features <span class="math inline">\(\mathbf{h}_i^{\left(t\right)}\)</span>.</li>
+<li class="fragment">Reading the edge features <span class="math inline">\(\mathbf{e}_{ij}^{\left(t\right)}\)</span>.</li>
+<li class="fragment">Aggregating the node features by an aggregation function <span class="math inline">\(\mathcal{A}\)</span>.</li>
+<li class="fragment">Updating the node features by a message function <span class="math inline">\(\mathcal{M}\)</span>.</li>
+<li class="fragment">Passing the updated node features to the next node.</li>
+<li class="fragment">For each node <span class="math inline">\(i\)</span> in the graph, update its feature vector <span class="math inline">\(h_i\)</span> with the features of its neighbours.</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="problem-statement" class="title-slide slide level1 center">
+<h1>Problem Statement</h1>
+<ul>
+<li class="fragment">Given a protein-protein complex, find the best pose of the paratope to the epitope.</li>
+<li class="fragment">The problem is formulated as a graph neural network problem.</li>
+</ul>
+</section>
+<section id="protein-protein-complex" class="slide level2">
+<h2>Protein-Protein Complex</h2>
+<ul>
+<li class="fragment"><p>A protein-protein complex consists of two proteins.</p></li>
+<li class="fragment"><p>The proteins are represented as graphs.</p></li>
+<li class="fragment"><p>Each node in the graph represents an atom.</p></li>
+<li class="fragment"><p>Each edge in the graph represents a bond between two atoms.</p></li>
+<li class="fragment"><p>The nodes in the graph are represented as feature vectors.</p></li>
+<li class="fragment"><p>The features of each node consist of the atomic coordinates.</p></li>
+<li class="fragment"><p>The edges in the graph are represented as feature vectors.</p></li>
+<li class="fragment"><p>The features of each edge consist of the bond type.</p></li>
+</ul>
+</section>
+<section id="paratope" class="slide level2">
+<h2>Paratope</h2>
+<ul>
+<li class="fragment">A paratope consists of a set of amino acids.</li>
+<li class="fragment">The amino acids are represented as nodes in the graph.</li>
+<li class="fragment">Each node in the graph could represent a residue or an atom.</li>
+<li class="fragment">Each edge in the graph represents a bond between two residues or atoms.</li>
+</ul>
+</section>
+<section id="epitope" class="slide level2">
+<h2>Epitope</h2>
+<ul>
+<li class="fragment">An epitope consists of a set of amino acids.</li>
+<li class="fragment">The amino acids are represented as nodes in the graph.</li>
+<li class="fragment">Each node in the graph represents an amino acid.</li>
+<li class="fragment">Each edge in the graph represents a bond between two amino acids.</li>
+</ul>
+</section>
+<section id="problem-formulation" class="slide level2">
+<h2>Problem Formulation</h2>
+<ul>
+<li class="fragment">Given a protein-protein complex and a paratope, find the best docking pose of the paratope to the epitope.</li>
+<li class="fragment">The problem is formulated as a graph neural network problem.</li>
+<li class="fragment">The input consists of a protein-protein complex and a paratope.</li>
+<li class="fragment">The output consists of the best docking pose of the paratope to the epitope.</li>
+</ul>
+</section>
+<section id="problem-formulation-1" class="slide level2">
+<h2>Problem Formulation</h2>
+<ul>
+<li class="fragment">The input consists of a protein-protein complex and a paratope.</li>
+<li class="fragment">The protein-protein complex is represented as a graph.</li>
+<li class="fragment">The paratope is represented as a graph.</li>
+</ul>
+</section></section>
+<section>
+<section id="methods" class="title-slide slide level1 center">
+<h1>Methods</h1>
+<ul>
+<li class="fragment">Equivariant Graph Neural Networks (EGNNs)</li>
+<li class="fragment">Hierarchical Equivariant Graph Neural Networks (HEGNNs)</li>
+<li class="fragment">Refinement Networks</li>
+<li class="fragment">Hierarchical Equivariant Refinement Networks (HERN)</li>
+</ul>
+</section>
+<section id="equivariant-graph-neural-networks-egnns" class="slide level2">
+<h2>Equivariant Graph Neural Networks (EGNNs)</h2>
+<ul>
+<li class="fragment">Equivariance is a property of a function that allows it to be invariant to a certain transformation.</li>
+<li class="fragment">In the context of GNNs, equivariance is a property of the GNN that allows it to be invariant to a certain transformation on the graph.</li>
+<li class="fragment">EGNNs are GNNs that are equivariant to graph isomorphism.</li>
+<li class="fragment">isomorphism is a transformation that preserves the graph structure.</li>
+</ul>
+</section>
+<section id="hierarchical-equivariant-graph-neural-networks-hegnns" class="slide level2">
+<h2>Hierarchical Equivariant Graph Neural Networks (HEGNNs)</h2>
+<ul>
+<li class="fragment">HEGNNs are EGNNs that are also equivariant to graph substructure.</li>
+<li class="fragment">HEGNNs can be interpreted as a composition of multiple EGNNs, each of which is equivariant to a different type of substructure.</li>
+</ul>
+</section>
+<section id="refinement-networks" class="slide level2">
+<h2>Refinement Networks</h2>
+<ul>
+<li class="fragment">Refinement Networks are neural networks that iteratively refine a set of initial coordinates.</li>
+<li class="fragment">The refinement process consists of:
+<ul>
+<li class="fragment">Predicting the next residue in the sequence.</li>
+<li class="fragment">Predicting the next set of coordinates based on the current coordinates and the predicted residue.</li>
+<li class="fragment">Computing a loss function based on the predicted and the current coordinates.</li>
+</ul></li>
+<li class="fragment">The refinement process is repeated until the sequence is fully predicted.</li>
+</ul>
+</section>
+<section id="hierarchical-equivariant-refinement-networks-hern" class="slide level2">
+<h2>Hierarchical Equivariant Refinement Networks (HERN)</h2>
+<ul>
+<li class="fragment">HERNs are HEGNNs that are composed with Refinement Networks.</li>
+<li class="fragment">HERNs can be interpreted as a composition of multiple refinement networks, each of which is equivariant to a different type of substructure.</li>
+</ul>
+</section></section>
+<section id="results" class="title-slide slide level1 center">
+<h1>Results</h1>
+<ul>
+<li class="fragment">Antibody-antigen docking</li>
+<li class="fragment">Antibody-antigen design</li>
+</ul>
+<p>=======</p>
+</section>
+
+<section>
+<section id="methods-1" class="title-slide slide level1 center">
+<h1>Methods</h1>
+<ul>
+<li class="fragment">Equivariant Graph Neural Networks</li>
+<li class="fragment">Hierarchical Equivariant Refinement Networks</li>
+<li class="fragment">Antibody-Antigen Docking and Design</li>
+</ul>
+</section>
+<section id="equivariant-graph-neural-networks" class="slide level2">
+<h2>Equivariant Graph Neural Networks</h2>
+<ul>
+<li class="fragment">Equivariance is a property of functions that preserves the group structure of the input.</li>
+<li class="fragment">Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.</li>
+<li class="fragment">Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.</li>
+<li class="fragment">Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.</li>
+</ul>
+</section>
+<section id="hierarchical-equivariant-refinement-networks" class="slide level2">
+<h2>Hierarchical Equivariant Refinement Networks</h2>
+<ul>
+<li class="fragment">Refinement networks are neural networks that refine the output of a previous network.</li>
+<li class="fragment">Refinement networks are neural networks that refine the output of a previous network.</li>
+<li class="fragment">Refinement networks are neural networks that refine the output of</li>
+</ul>
+<p>=======</p>
+</section></section>
+<section>
+<section id="methods-2" class="title-slide slide level1 center">
+<h1>Methods</h1>
+<ul>
+<li class="fragment">Equivariant Graph Neural Networks (EGNNs)</li>
+<li class="fragment">Equivariant Refinement Networks (ERNs)</li>
+<li class="fragment">Hierarchical Equivariant Refinement Networks (HERNs)</li>
+<li class="fragment">Training and evaluation</li>
+</ul>
+</section>
+<section id="equivariant-graph-neural-networks-egnns-1" class="slide level2">
+<h2>Equivariant Graph Neural Networks (EGNNs)</h2>
+<ul>
+<li class="fragment">Equivariant Graph Neural Networks (EGNNs) are GNNs that are invariant to the order of nodes in the graph.</li>
+<li class="fragment">The nodes and edges are updated by message passing.</li>
+<li class="fragment">The message passing is performed multiple times.</li>
+<li class="fragment">The message passing is performed in parallel.</li>
+<li class="fragment">The message passing is performed in a hierarchical manner.</li>
+</ul>
+</section>
+<section id="equivariant-refinement-networks-erns" class="slide level2">
+<h2>Equivariant Refinement Networks (ERNs)</h2>
+<ul>
+<li class="fragment">Equivariant Refinement Networks (ERNs) are EGNNs that refine the structure of a protein.</li>
+<li class="fragment">The nodes and edges are updated by message passing.</li>
+<li class="fragment">The message passing is performed multiple times.</li>
+<li class="fragment">The message passing is performed in parallel.</li>
+<li class="fragment">The message passing is performed in a hierarchical manner.</li>
+</ul>
+</section>
+<section id="hierarchical-equivariant-refinement-networks-herns" class="slide level2">
+<h2>Hierarchical Equivariant Refinement Networks (HERNs)</h2>
+<ul>
+<li class="fragment">Hierarchical Equivariant Refinement Networks (HERNs) are ERNs that refine the structure of a protein.</li>
+<li class="fragment">The nodes and edges are updated by message passing.</li>
+<li class="fragment">The message passing is performed multiple times.</li>
+<li class="fragment">The message passing is performed in parallel.</li>
+<li class="fragment">The message passing is performed in a hierarchical manner.</li>
+</ul>
+</section>
+<section id="training-and-evaluation" class="slide level2">
+<h2>Training and evaluation</h2>
+<ul>
+<li class="fragment">The model is trained on a large dataset of antibody-antigen complexes.</li>
+<li class="fragment">The model is evaluated on a small dataset of antibody-antigen complexes.</li>
+<li class="fragment">The model is evaluated on a small dataset of antibody-antigen complexes.</li>
+<li class="fragment">The model is evaluated on a small dataset of antibody-antigen complexes.</li>
+</ul>
+</section></section>
+<section id="results-1" class="title-slide slide level1 center">
+<h1>Results</h1>
+<ul>
+<li class="fragment">HERN is able to dock antibodies to antigens.</li>
+</ul>
+<p>=======</p>
+</section>
+
+<section>
+<section id="methods-3" class="title-slide slide level1 center">
+<h1>Methods</h1>
+<ul>
+<li class="fragment">Hierarchical Equivariant Refinement Networks (HERN)</li>
+<li class="fragment">Equivariant Graph Neural Networks (EGNNs)</li>
+<li class="fragment">Unconditional Refinement</li>
+<li class="fragment">Sequence Prediction</li>
+<li class="fragment">Data Processing</li>
+<li class="fragment">Model Training</li>
+<li class="fragment">Prediction</li>
+<li class="fragment">Relaxation</li>
+</ul>
+</section>
+<section id="hierarchical-equivariant-refinement-networks-hern-1" class="slide level2">
+<h2>Hierarchical Equivariant Refinement Networks (HERN)</h2>
+<ul>
+<li class="fragment">HERN is a hierarchical equivariant refinement network.</li>
+<li class="fragment">HERN is a hierarchical equivariant refinement network.</li>
+<li class="fragment">HERN is a hierarchical equivariant refinement network.</li>
+<li class="fragment">HERN is a hierarchical equivariant refinement network.</li>
+<li class="fragment">HERN is a hierarchical equivariant refinement network.</li>
+</ul>
+</section>
+<section id="equivariant-graph-neural-networks-egnns-2" class="slide level2">
+<h2>Equivariant Graph Neural Networks (EGNNs)</h2>
+<ul>
+<li class="fragment">EGNNs are equivariant graph neural networks.</li>
+<li class="fragment">EGNNs are equivariant graph neural networks.</li>
+<li class="fragment">EGNNs are equivariant graph neural networks.</li>
+<li class="fragment">EGNNs are equivariant graph neural networks.</li>
+<li class="fragment">EGNNs are equivariant graph neural networks.</li>
+</ul>
+</section>
+<section id="unconditional-refinement" class="slide level2">
+<h2>Unconditional Refinement</h2>
+<ul>
+<li class="fragment">Unconditional refinement is the process of refining an initial structure without any</li>
+</ul>
+<p>=======</p>
 </section>
 <section id="docking" class="slide level2">
 <h2>Docking</h2>
 <div>
-<p><img data-src="HERN_files/images/HADDOCKanimation_of_rigid-body_minimization.gif" class="absolute fragment quarto-discovered-preview-image" style="bottom: 110px; right: 130px; width: 300px; "></p>
+<p><img data-src="HERN_files/images/HADDOCKanimation_of_rigid-body_minimization.gif" class="absolute fragment" style="bottom: 110px; right: 130px; width: 300px; "></p>
 <p><img data-src="HERN_files/images/haddock_animation_of_refinement_in_explicit_solvent_water.gif" class="absolute" style="top: 170px; left: 30px; width: 400px; height: 400px; "></p>
 <p><img data-src="HERN_files/images/haddock_animation_of_semi-flexible_simulated_annealing.gif" class="absolute fragment" style="top: 150px; right: 80px; width: 450px; "></p>
 </div>
 <div class="footer">
-<p>Curtesy of Bonvin lab: <a href="https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/">HADDOCK2.4 Antibody - Antigen tutorial</a></p>
+<p>From Bonvin lab: <a href="https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/">HADDOCK2.4 Antibody - Antigen tutorial</a></p>
 </div>
 </section>
 <section id="pipeline-1" class="slide level2">
@@ -557,8 +857,28 @@ style E fill:#fc9,stroke:#333,stroke-width:2px
 </div>
 </div>
 </div>
-
-<img src="HERN_files/images/InstaDeep_logo.PNG" class="slide-logo r-stretch"><div class="footer footer-default">
+</section>
+<section id="pipeline-5" class="slide level2">
+<h2>pipeline 5</h2>
+<div class="cell" data-reveal="true">
+<div class="cell-output-display">
+<div>
+<div>
+<pre class="mermaid mermaid-js">classDiagram
+    class EGNNEncoder {
+        +forward(X, V, S, A) : tuple
+    }
+    class HierEGNNEncoder {
+        +forward(X, V, S, A) : tuple
+    }
+    EGNNEncoder --|&gt; nn.Module
+    HierEGNNEncoder --|&gt; nn.Module
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="footer footer-default">
 <p><a href="https://github.com/Peji-moghimi/sciprez" class="uri">https://github.com/Peji-moghimi/sciprez</a></p>
 </div>
 </section></section>

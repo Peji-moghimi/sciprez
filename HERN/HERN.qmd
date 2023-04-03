@@ -8,7 +8,6 @@ format:
     chalkboard: 
       buttons: true
     preview-links: true
-    logo: HERN_files/images/InstaDeep_logo.PNG
     footer: <https://github.com/Peji-moghimi/sciprez>
 resources:
   - HERN_presentation.pdf
@@ -27,12 +26,254 @@ resources:
   - Message Passing in GNNs
 
 
-## Antibodies, Paratopes, Epitopes and docking
+## Antibodies, Paratopes, Epitopes and docking {background-color="black" background-image="HERN_files/images/figure_antibody_structure_cropped.png" background-size="550px" background-repeat="repeat" data-background-opacity="0.3"}
   
   - Antibodies are Y-shaped proteins that bind to antigens.
   - The antigen-binding site is called the paratope.
   - The binding region of the antigen is called the epitope.
   - Docking is the process of finding the best binding pose of a paratope to an epitope.
+  ![](HERN_files/images/figure_antibody_binding.PNG){.absolute .fragment bottom="10" right="1050" width="225".fade-in-then-out}
+
+## Molecules as Graphs
+
+  - The nodes in the graph represent the atoms of the molecule.
+  - The edges represent the bonds between the atoms.
+  - The graph structure captures the spatial information of the molecule.
+
+## {background-color="white"}
+
+![](HERN_files/images/caffeine/1680175220705.jpg){.absolute .fragment bottom="50" right="30" width="900".fade-in-then-out}
+
+![](HERN_files/images/caffeine/1680175220679.png){.absolute .fragment bottom="50" right="30" width="900"}
+
+![](HERN_files/images/caffeine/caffeine_cartoon_molecule.png){.absolute .fragment bottom="50" right="30" width="900"}
+
+## Graph Neural Networks (GNNs)
+
+  - GNNs are a class of neural networks, based on the idea of message passing, that operate on graph-structured data.
+  - GNNs have been successfully applied to protein design, molecular docking, drug design, and protein-protein interaction, and other applications.
+
+  - GNNs can be used to model complex molecular interactions.
+    - The atoms (nodes/vertices) of the molecular graph can be represented by a set of features, and the bonds (edges) can also be represented by a set of features.
+    - The features of the atoms and bonds can be updated by message passing.
+
+## Message Passing in GNNs
+
+  - Message passing is the process of propagating information through a graph. 
+  - Defines nodes' and/or edges' features in terms of the neighbouring nodes' and/or edges' features.
+  - The message passing is performed in different ways, multiple times in parallel and a hierarchical manner.
+  - Nodes' (Atoms) and edges' (bonds) features are updated through message passing, resulting in an embedding representation that captures the global and/or local spatial information of the molecule. 
+  - It can be used in both supervised and unsupervised learning.
+
+## Message Passing in GNNs {.scrollable}
+  - The message passing process in GNNs is based on the following equation:
+  $$ 
+  \mathbf{h}_i^{\left(t+1\right)} = \sigma\left(\mathbf{W}_h\mathbf{h}_i^{\left(t\right)} + \sum_{j\in \mathcal{N}(i)} \mathbf{W}_e \mathbf{e}_{ij}^{\left(t\right)}\right)
+  $$
+  - Where $\mathbf{h}_i^{\left(t\right)}$ is the node feature vector at time $t$ for node $i$, where time is the number of message passing steps.
+  - $\mathbf{W}_h$ is the weight matrix for the node features.
+  - $\mathbf{e}_{ij}^{\left(t\right)}$ is the edge feature vector at time $t$ between node $i$ and node $j$.
+  - $\mathbf{W}_e$ is the weight matrix for the edge features.
+  - $\mathcal{N}(i)$ is the set of neighbors of node $i$.
+  - $\sigma$ is the activation function.
+
+## Message Passing in GNNs
+  - Message passing steps are as follows:
+    - Reading the node features $\mathbf{h}_i^{\left(t\right)}$.
+    - Reading the edge features $\mathbf{e}_{ij}^{\left(t\right)}$.
+    - Aggregating the node features by an aggregation function $\mathcal{A}$.
+    - Updating the node features by a message function $\mathcal{M}$.
+    - Passing the updated node features to the next node.
+    - For each node $i$ in the graph, update its feature vector $h_i$ with the features of its neighbours.
+
+# Problem Statement
+
+  - Given a protein-protein complex, find the best pose of the paratope to the epitope.
+  - The problem is formulated as a graph neural network problem.
+
+## Protein-Protein Complex
+
+  - A protein-protein complex consists of two proteins.
+  - The proteins are represented as graphs.
+  - Each node in the graph represents an atom.
+  - Each edge in the graph represents a bond between two atoms.
+
+  - The nodes in the graph are represented as feature vectors.
+  - The features of each node consist of the atomic coordinates.
+  - The edges in the graph are represented as feature vectors.
+  - The features of each edge consist of the bond type.
+
+## Paratope
+
+  - A paratope consists of a set of amino acids.
+  - The amino acids are represented as nodes in the graph.
+  - Each node in the graph could represent a residue or an atom.
+  - Each edge in the graph represents a bond between two residues or atoms.
+
+## Epitope
+
+  - An epitope consists of a set of amino acids.
+  - The amino acids are represented as nodes in the graph.
+  - Each node in the graph represents an amino acid.
+  - Each edge in the graph represents a bond between two amino acids.
+
+## Problem Formulation
+
+  - Given a protein-protein complex and a paratope, find the best docking pose of the paratope to the epitope.
+  - The problem is formulated as a graph neural network problem.
+  - The input consists of a protein-protein complex and a paratope.
+  - The output consists of the best docking pose of the paratope to the epitope.
+
+## Problem Formulation
+
+  - The input consists of a protein-protein complex and a paratope.
+  - The protein-protein complex is represented as a graph.
+  - The paratope is represented as a graph.
+
+
+# Methods
+
+  - Equivariant Graph Neural Networks (EGNNs)
+  - Hierarchical Equivariant Graph Neural Networks (HEGNNs)
+  - Refinement Networks
+  - Hierarchical Equivariant Refinement Networks (HERN)
+
+## Equivariant Graph Neural Networks (EGNNs)
+
+  - Equivariance is a property of a function that allows it to be invariant to a certain transformation.
+  - In the context of GNNs, equivariance is a property of the GNN that allows it to be invariant to a certain transformation on the graph.
+  - EGNNs are GNNs that are equivariant to graph isomorphism.
+  - isomorphism is a transformation that preserves the graph structure.
+
+## Hierarchical Equivariant Graph Neural Networks (HEGNNs)
+
+  - HEGNNs are EGNNs that are also equivariant to graph substructure.
+  - HEGNNs can be interpreted as a composition of multiple EGNNs, each of which is equivariant to a different type of substructure.
+
+## Refinement Networks
+
+  - Refinement Networks are neural networks that iteratively refine a set of initial coordinates.
+  - The refinement process consists of:
+    - Predicting the next residue in the sequence.
+    - Predicting the next set of coordinates based on the current coordinates and the predicted residue.
+    - Computing a loss function based on the predicted and the current coordinates.
+  - The refinement process is repeated until the sequence is fully predicted.
+
+## Hierarchical Equivariant Refinement Networks (HERN)
+
+  - HERNs are HEGNNs that are composed with Refinement Networks.
+  - HERNs can be interpreted as a composition of multiple refinement networks, each of which is equivariant to a different type of substructure.
+
+# Results
+
+  - Antibody-antigen docking
+  - Antibody-antigen design
+
+=======
+
+
+# Methods
+
+  - Equivariant Graph Neural Networks
+  - Hierarchical Equivariant Refinement Networks
+  - Antibody-Antigen Docking and Design
+
+## Equivariant Graph Neural Networks
+
+  - Equivariance is a property of functions that preserves the group structure of the input.
+  - Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.
+  - Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.
+  - Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.
+
+## Hierarchical Equivariant Refinement Networks
+
+  - Refinement networks are neural networks that refine the output of a previous network.
+  - Refinement networks are neural networks that refine the output of a previous network.
+  - Refinement networks are neural networks that refine the output of
+
+=======
+
+
+# Methods
+
+  - Equivariant Graph Neural Networks (EGNNs)
+  - Equivariant Refinement Networks (ERNs)
+  - Hierarchical Equivariant Refinement Networks (HERNs)
+  - Training and evaluation
+
+## Equivariant Graph Neural Networks (EGNNs)
+
+  - Equivariant Graph Neural Networks (EGNNs) are GNNs that are invariant to the order of nodes in the graph.
+  - The nodes and edges are updated by message passing.
+  - The message passing is performed multiple times.
+  - The message passing is performed in parallel.
+  - The message passing is performed in a hierarchical manner.
+
+## Equivariant Refinement Networks (ERNs)
+
+  - Equivariant Refinement Networks (ERNs) are EGNNs that refine the structure of a protein.
+  - The nodes and edges are updated by message passing.
+  - The message passing is performed multiple times.
+  - The message passing is performed in parallel.
+  - The message passing is performed in a hierarchical manner.
+
+## Hierarchical Equivariant Refinement Networks (HERNs)
+
+  - Hierarchical Equivariant Refinement Networks (HERNs) are ERNs that refine the structure of a protein.
+  - The nodes and edges are updated by message passing.
+  - The message passing is performed multiple times.
+  - The message passing is performed in parallel.
+  - The message passing is performed in a hierarchical manner.
+
+## Training and evaluation
+
+  - The model is trained on a large dataset of antibody-antigen complexes.
+  - The model is evaluated on a small dataset of antibody-antigen complexes.
+  - The model is evaluated on a small dataset of antibody-antigen complexes.
+  - The model is evaluated on a small dataset of antibody-antigen complexes.
+
+# Results
+
+  - HERN is able to dock antibodies to antigens.
+
+=======
+
+# Methods
+
+  - Hierarchical Equivariant Refinement Networks (HERN)
+  - Equivariant Graph Neural Networks (EGNNs)
+  - Unconditional Refinement
+  - Sequence Prediction
+  - Data Processing
+  - Model Training
+  - Prediction
+  - Relaxation
+
+## Hierarchical Equivariant Refinement Networks (HERN)
+
+  - HERN is a hierarchical equivariant refinement network.
+  - HERN is a hierarchical equivariant refinement network.
+  - HERN is a hierarchical equivariant refinement network.
+  - HERN is a hierarchical equivariant refinement network.
+  - HERN is a hierarchical equivariant refinement network.
+
+## Equivariant Graph Neural Networks (EGNNs)
+
+  - EGNNs are equivariant graph neural networks.
+  - EGNNs are equivariant graph neural networks.
+  - EGNNs are equivariant graph neural networks.
+  - EGNNs are equivariant graph neural networks.
+  - EGNNs are equivariant graph neural networks.
+
+## Unconditional Refinement
+
+  - Unconditional refinement is the process of refining an initial structure without any
+
+=======
+
+
+
+
 
 ## Docking
 ::: nonincremental
@@ -44,7 +285,7 @@ resources:
 :::
 
 ::: footer
-Curtesy of Bonvin lab: [HADDOCK2.4 Antibody - Antigen tutorial](https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/)
+From Bonvin lab: [HADDOCK2.4 Antibody - Antigen tutorial](https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/)
 :::
 
 ## Pipeline 1 
@@ -194,4 +435,20 @@ end
 style B fill:#f9d,stroke:#333,stroke-width:2px
 style D fill:#9cf,stroke:#333,stroke-width:2px
 style E fill:#fc9,stroke:#333,stroke-width:2px
+```
+
+## pipeline 5
+```{mermaid}
+classDiagram
+
+  Normalize --|> nn.Module: Inheritance
+  MPNNLayer --|> nn.Module: Inheritance
+  PosEmbedding --|> nn.Module: Inheritance
+  AAEmbedding --|> nn.Module: Inheritance
+  ABModel --|> nn.Module: Inheritance
+
+  ABModel --> Normalize: uses
+  ABModel --> MPNNLayer: uses
+  ABModel --> PosEmbedding: uses
+  ABModel --> AAEmbedding: uses
 ```
