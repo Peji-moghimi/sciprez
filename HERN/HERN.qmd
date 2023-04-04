@@ -9,8 +9,7 @@ format:
       buttons: true
     preview-links: true
     footer: <https://github.com/Peji-moghimi/sciprez>
-resources:
-  - HERN_presentation.pdf
+    css: HERN_files/libs/quarto-diagram/mermaid.css
 ---
 
 # Background and Motivations
@@ -29,8 +28,9 @@ resources:
 ## Antibodies, Paratopes, Epitopes and docking {background-color="black" background-image="HERN_files/images/figure_antibody_structure_cropped.png" background-size="550px" background-repeat="repeat" data-background-opacity="0.3"}
   
   - Antibodies are Y-shaped proteins that bind to antigens.
-  - The antigen-binding site is called the paratope.
-  - The binding region of the antigen is called the epitope.
+  - The antibody's binding-surface is called the paratope.
+  - An antigen's binding-surfaces are called the epitopes.
+    - An antigen can have multiple epitopes.
   - Docking is the process of finding the best binding pose of a paratope to an epitope.
   ![](HERN_files/images/figure_antibody_binding.PNG){.absolute .fragment bottom="10" right="1050" width="225".fade-in-then-out}
 
@@ -56,6 +56,14 @@ resources:
   - GNNs can be used to model complex molecular interactions.
     - The atoms (nodes/vertices) of the molecular graph can be represented by a set of features, and the bonds (edges) can also be represented by a set of features.
     - The features of the atoms and bonds can be updated by message passing.
+
+## Equivariant Graph Neural Networks (EGNNs)
+
+  - Equivariance is a property of a function that allows it to be invariant to a certain transformation.
+  - In the context of GNNs, equivariance is a property of the GNN that allows it to be invariant to a certain transformation on the graph.
+  - EGNNs are GNNs that are equivariant to graph isomorphism.
+    - isomorphism is a transformation that preserves the graph structure.
+    - I.e. EGNNs are invariant to group structure and the order of nodes in the graph.
 
 ## Message Passing in GNNs
 
@@ -86,18 +94,21 @@ resources:
     - Passing the updated node features to the next node.
     - For each node $i$ in the graph, update its feature vector $h_i$ with the features of its neighbours.
 
-# Problem Statement
+## Problem Formulation
 
-  - Given a protein-protein complex, find the best pose of the paratope to the epitope.
+  - Given a protein-protein complex and a paratope, find the best docking pose of the paratope to the epitope.
   - The problem is formulated as a graph neural network problem.
+  - The input consists of a paratope-epitope represented as a graph.
+  - The output consists of the best docking pose of the paratope to the epitope.
 
-## Protein-Protein Complex
+## Paratope-Epitope Complex
 
-  - A protein-protein complex consists of two proteins.
-  - The proteins are represented as graphs.
+  - The paratope is represented by two graphs:
+    - A graph to represent the paratope in terms of its residues.
+      - Each node in the graph only represents $C_{/alpha}$ atom of the residue.
+    - A graph to represent the paratope in terms of its atoms, including the side chains. 
   - Each node in the graph represents an atom.
   - Each edge in the graph represents a bond between two atoms.
-
   - The nodes in the graph are represented as feature vectors.
   - The features of each node consist of the atomic coordinates.
   - The edges in the graph are represented as feature vectors.
@@ -110,27 +121,6 @@ resources:
   - Each node in the graph could represent a residue or an atom.
   - Each edge in the graph represents a bond between two residues or atoms.
 
-## Epitope
-
-  - An epitope consists of a set of amino acids.
-  - The amino acids are represented as nodes in the graph.
-  - Each node in the graph represents an amino acid.
-  - Each edge in the graph represents a bond between two amino acids.
-
-## Problem Formulation
-
-  - Given a protein-protein complex and a paratope, find the best docking pose of the paratope to the epitope.
-  - The problem is formulated as a graph neural network problem.
-  - The input consists of a protein-protein complex and a paratope.
-  - The output consists of the best docking pose of the paratope to the epitope.
-
-## Problem Formulation
-
-  - The input consists of a protein-protein complex and a paratope.
-  - The protein-protein complex is represented as a graph.
-  - The paratope is represented as a graph.
-
-
 # Methods
 
   - Equivariant Graph Neural Networks (EGNNs)
@@ -138,31 +128,15 @@ resources:
   - Refinement Networks
   - Hierarchical Equivariant Refinement Networks (HERN)
 
-## Equivariant Graph Neural Networks (EGNNs)
-
-  - Equivariance is a property of a function that allows it to be invariant to a certain transformation.
-  - In the context of GNNs, equivariance is a property of the GNN that allows it to be invariant to a certain transformation on the graph.
-  - EGNNs are GNNs that are equivariant to graph isomorphism.
-  - isomorphism is a transformation that preserves the graph structure.
-
-## Hierarchical Equivariant Graph Neural Networks (HEGNNs)
-
-  - HEGNNs are EGNNs that are also equivariant to graph substructure.
-  - HEGNNs can be interpreted as a composition of multiple EGNNs, each of which is equivariant to a different type of substructure.
-
-## Refinement Networks
-
+## Hierarchical Equivariant Refinement Network (HERN)
+  
   - Refinement Networks are neural networks that iteratively refine a set of initial coordinates.
   - The refinement process consists of:
     - Predicting the next residue in the sequence.
     - Predicting the next set of coordinates based on the current coordinates and the predicted residue.
     - Computing a loss function based on the predicted and the current coordinates.
   - The refinement process is repeated until the sequence is fully predicted.
-
-## Hierarchical Equivariant Refinement Networks (HERN)
-
-  - HERNs are HEGNNs that are composed with Refinement Networks.
-  - HERNs can be interpreted as a composition of multiple refinement networks, each of which is equivariant to a different type of substructure.
+  - The message passing is performed in a hierarchical manner for computational efficieny.
 
 # Results
 
@@ -178,18 +152,7 @@ resources:
   - Hierarchical Equivariant Refinement Networks
   - Antibody-Antigen Docking and Design
 
-## Equivariant Graph Neural Networks
 
-  - Equivariance is a property of functions that preserves the group structure of the input.
-  - Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.
-  - Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.
-  - Equivariant GNNs are GNNs that are equivariant to the group of graph automorphisms.
-
-## Hierarchical Equivariant Refinement Networks
-
-  - Refinement networks are neural networks that refine the output of a previous network.
-  - Refinement networks are neural networks that refine the output of a previous network.
-  - Refinement networks are neural networks that refine the output of
 
 =======
 
@@ -201,29 +164,6 @@ resources:
   - Hierarchical Equivariant Refinement Networks (HERNs)
   - Training and evaluation
 
-## Equivariant Graph Neural Networks (EGNNs)
-
-  - Equivariant Graph Neural Networks (EGNNs) are GNNs that are invariant to the order of nodes in the graph.
-  - The nodes and edges are updated by message passing.
-  - The message passing is performed multiple times.
-  - The message passing is performed in parallel.
-  - The message passing is performed in a hierarchical manner.
-
-## Equivariant Refinement Networks (ERNs)
-
-  - Equivariant Refinement Networks (ERNs) are EGNNs that refine the structure of a protein.
-  - The nodes and edges are updated by message passing.
-  - The message passing is performed multiple times.
-  - The message passing is performed in parallel.
-  - The message passing is performed in a hierarchical manner.
-
-## Hierarchical Equivariant Refinement Networks (HERNs)
-
-  - Hierarchical Equivariant Refinement Networks (HERNs) are ERNs that refine the structure of a protein.
-  - The nodes and edges are updated by message passing.
-  - The message passing is performed multiple times.
-  - The message passing is performed in parallel.
-  - The message passing is performed in a hierarchical manner.
 
 ## Training and evaluation
 
@@ -249,21 +189,6 @@ resources:
   - Prediction
   - Relaxation
 
-## Hierarchical Equivariant Refinement Networks (HERN)
-
-  - HERN is a hierarchical equivariant refinement network.
-  - HERN is a hierarchical equivariant refinement network.
-  - HERN is a hierarchical equivariant refinement network.
-  - HERN is a hierarchical equivariant refinement network.
-  - HERN is a hierarchical equivariant refinement network.
-
-## Equivariant Graph Neural Networks (EGNNs)
-
-  - EGNNs are equivariant graph neural networks.
-  - EGNNs are equivariant graph neural networks.
-  - EGNNs are equivariant graph neural networks.
-  - EGNNs are equivariant graph neural networks.
-  - EGNNs are equivariant graph neural networks.
 
 ## Unconditional Refinement
 
@@ -271,8 +196,9 @@ resources:
 
 =======
 
+# Oversmoothing and suspended animation
 
-
+![](HERN_files/animations/caffeine_graph_Gauss-bluring.gif)
 
 
 ## Docking
@@ -288,167 +214,217 @@ resources:
 From Bonvin lab: [HADDOCK2.4 Antibody - Antigen tutorial](https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/)
 :::
 
-## Pipeline 1 
-```{mermaid}
-graph TD
-    A(Datasets) --> B(Processing)
-    B --> C1(Training Set)
-    B --> C2(Validation Set)
-    B --> C3(Test Set)
-    C1 --> D1(RefineDocker Model Training)
-    C2 --> D2(RefineDocker Model Validation)
-    C3 --> D3(RefineDocker Model Testing)
-    D1 --> E(Model Checkpoint)
-    F(Predict.py) --> G(Prediction)
-    E --> G
-    G --> H(OpenMM Relaxation)
-    H --> I(Refined Complex Structures)
-```
+# HERN {.centered-title}
 
-## Pipeline 2
-```{mermaid}
-graph TD
-A[Input Data] --> B[EGNNEncoder]
-B --> B4[Readout]
-B4 --> C[Select Target]
-C --> D[UncondRefineDecoder]
-D --> E[SequenceDecoder]
-E --> F[Output Data]
+<style>
+/* Center slice title */
+.centered-title {
+  text-align: center;
+}
+</style>
 
-subgraph EGNNEncoder
-    B1[Node Features] --> B2[Conv Layers]
-    B3[Edge Features] --> B2
-    B2 --> B4
-end
+##
 
-subgraph UncondRefineDecoder
-    D1[Initial Coords] --> D2[Iterative Refinement]
-    D3[Initial Residues] --> D4[Predict Residue]
-    D2 --> D5[Struct Loss]
-    D4 --> D5
-    D5 --> D
-end
+<style>
+.center-diagram {
+  width: 125%;
+  height: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.node text {
+  font-size: 120px;
+}
+.label text {
+  font-size: 30px;
+}
+</style>
 
-subgraph SequenceDecoder
-    E1[Encode Target] --> E2[SRUpp RNN]
-    E2 --> E3[Attention Mechanism]
-    E3 --> E4[Sequence Prediction]
-    E4 --> E
-end
+<section class="slide">
 
-subgraph DataProcessing
-    DP1[Raw Datasets] --> DP2[process_data.py]
-    DP2 --> DP3[Training, Validation, Test Sets]
-end
-
-subgraph ModelTraining
-    MT1[Training Set] --> MT2[Train RefineDocker]
-    MT3[Validation Set] --> MT4[Validate RefineDocker]
-    MT2 --> MT5[Best Model Checkpoint]
-    MT4 --> MT5
-end
-
-subgraph Prediction
-    PR1[Test Set] --> PR2[predict.py]
-    PR3[Model Checkpoint] --> PR2
-    PR2 --> PR4[Predicted Structures]
-end
-
-subgraph Relaxation
-    RL1[Predicted Structures] --> RL2[OpenMM Relaxation]
-    RL2 --> RL3[Refined Complex Structures]
-end
-
-style B fill:#f9d,stroke:#333,stroke-width:2px
-style D fill:#9cf,stroke:#333,stroke-width:2px
-style E fill:#fc9,stroke:#333,stroke-width:2px
-style DP2 fill:#f96,stroke:#333,stroke-width:2px
-style MT2 fill:#9f9,stroke:#333,stroke-width:2px
-style PR2 fill:#6cf,stroke:#333,stroke-width:2px
-style RL2 fill:#c9f,stroke:#333,stroke-width:2px
-
-```
-
-## Pipeline 3
-```{mermaid}
-graph TD
-A[Input Data] --> B[EGNNEncoder]
-B --> C[Select Target]
-C --> D[UncondRefineDecoder]
-D --> E[SequenceDecoder]
-E --> F[Output Data]
-
-subgraph EGNNEncoder
-    B1[Node Features] --> B2[Conv Layers]
-    B3[Edge Features] --> B2
-    B2 --> B4[Readout]
-end
-
-subgraph UncondRefineDecoder
-    D1[Initial Coords] --> D2[Iterative Refinement]
-    D3[Initial Residues] --> D4[Predict Residue]
-    D2 --> D5[Struct Loss]
-    D4 --> D5
-    D5 --> D
-end
-
-subgraph SequenceDecoder
-    E1[Encode Target] --> E2[SRUpp RNN]
-    E2 --> E3[Attention Mechanism]
-    E3 --> E4[Sequence Prediction]
-    E4 --> E
-end
-
-style B fill:#f9d,stroke:#333,stroke-width:2px
-style D fill:#9cf,stroke:#333,stroke-width:2px
-style E fill:#fc9,stroke:#333,stroke-width:2px
-```
-
-## Pipeline 4
-```{mermaid}
-graph TD
-A[Antibody-Antigen-Complex Data] --> B[Graph-based Encoding]
-B --> C[Epitope Selection]
-C --> D[3D Structure Refinement]
-D --> E[Paratope Sequence Prediction]
-E --> F[Refined 3D Structure & Predicted Sequence]
-
-subgraph Graph-based Encoding
-    B1[Node & Edge Features] --> B2[Graph Convolution Layers]
-    B2 --> B3[Encoded Representation]
-end
-
-subgraph 3D Structure Refinement
-    D1[Initial Coordinates] --> D2[Iterative Coordinate Refinement]
-    D3[Residue Information] --> D4[Residue Prediction]
-    D2 --> D5[Loss Calculation]
-    D4 --> D5
-    D5 --> D
-end
-
-subgraph Paratope Sequence Prediction
-    E1[Encoded Epitope] --> E2[Recurrent Neural Network]
-    E2 --> E3[Attention Mechanism]
-    E3 --> E
-end
-
-style B fill:#f9d,stroke:#333,stroke-width:2px
-style D fill:#9cf,stroke:#333,stroke-width:2px
-style E fill:#fc9,stroke:#333,stroke-width:2px
-```
-
-## pipeline 5
+<div class="center-diagram">
 ```{mermaid}
 classDiagram
+  class EGNNEncoder {
+    - update_X: bool
+    - features_type: str
+    - features: ProteinFeatures
+    - node_in: int
+    - edge_in: int
+    - W_v: nn.Linear
+    - W_e: nn.Linear
+    - layers: nn.ModuleList
+    - W_x: nn.Linear
+    - U_x: nn.Linear
+    - T_x: nn.Sequential
+    + __init__(args, node_hdim=0, features_type='backbone', update_X=True)
+    - forward(X, V, S, A)
 
-  Normalize --|> nn.Module: Inheritance
-  MPNNLayer --|> nn.Module: Inheritance
-  PosEmbedding --|> nn.Module: Inheritance
-  AAEmbedding --|> nn.Module: Inheritance
-  ABModel --|> nn.Module: Inheritance
-
-  ABModel --> Normalize: uses
-  ABModel --> MPNNLayer: uses
-  ABModel --> PosEmbedding: uses
-  ABModel --> AAEmbedding: uses
+  }
+  class HierEGNNEncoder {
+    - update_X: bool
+    - backbone_CA_only: bool
+    - clash_step: int
+    - residue_mpn: EGNNEncoder
+    - atom_mpn: EGNNEncoder
+    - W_x: nn.Linear
+    - U_x: nn.Linear
+    - T_x: nn.Sequential
+    - W_a: nn.Linear
+    - U_a: nn.Linear
+    - T_a: nn.Sequential
+    - embedding: nn.Embedding
+    + __init__(args, update_X=True, backbone_CA_only=True)
+    + forward(X, V, S, A)
+  }
+  class MPNNLayer {
+    - num_hidden: int
+    - num_in: int
+    - dropout: nn.Dropout
+    - norm: nn.Identity
+    - W: nn.Sequential
+    + forward(h_V: torch.Tensor, h_E: torch.Tensor, mask_attend: torch.Tensor) -> torch.Tensor
+  }
+  class PosEmbedding {
+    - num_embeddings: int
+    + forward(E_idx: torch.Tensor) -> torch.Tensor
+  }
+  class AAEmbedding {
+    - hydropathy: dict
+    - volume: dict
+    - charge: dict
+    - polarity: dict
+    - acceptor: dict
+    - donor: dict
+    - embedding: torch.Tensor
+    + to_rbf(D: torch.Tensor, D_min: float, D_max: float, stride: float) -> torch.Tensor
+    + transform(aa_vecs: torch.Tensor) -> torch.Tensor
+    + dim() -> int
+    + forward(x: torch.Tensor, raw: bool=False) -> torch.Tensor
+    + soft_forward(x: torch.Tensor) -> torch.Tensor
+  }
+  class ABModel {
+    - k_neighbors: int
+    - hidden_size: int
+    - embedding: AAEmbedding
+    - features: ProteinFeatures
+    - W_i: nn.Linear
+    - bce_loss: nn.BCEWithLogitsLoss
+    - ce_loss: nn.CrossEntropyLoss
+    - mse_loss: nn.MSELoss
+    - huber_loss: nn.SmoothL1Loss
+    + select_target(tgt_X: torch.Tensor, tgt_h: torch.Tensor, tgt_A: torch.Tensor, tgt_pos: list) -> tuple
+}
+  class PositionalEncodings {
+    -num_embeddings: int
+    -period_range: list
+    +__init__(num_embeddings, period_range=[2,1000])
+  }
+  class ProteinFeatures {
+    - top_k: int
+    - num_rbf: int
+    - features_type: str
+    - direction: str
+    + forward(positions: torch.Tensor, h_V: torch.Tensor, h_E: torch.Tensor, A: torch.Tensor, R: torch.Tensor, pos: list) -> tuple
+  }
+  class RefineDocker {
+    + rstep: int
+    + target_mpn: EGNNEncoder
+    + hierarchical: bool
+    - U_i: nn.Linear
+    - struct_mpn: Union[EGNNEncoder, HierEGNNEncoder]
+    - W_x0: nn.Sequential
+    - U_x0: nn.Sequential
+    + struct_loss(bind_X, tgt_X, true_V, true_R, true_D, inter_D, true_C): Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]
+    + forward(binder, target, surface): ReturnType
+  }
+  class CondRefineDecoder {
+    -hierarchical: bool
+    -residue_atom14: Tensor
+    -W_s0: Sequential
+    -W_x0: Sequential
+    -U_x0: Sequential
+    -W_s: Linear
+    -U_i: Linear
+    -target_mpn: EGNNEncoder
+    -struct_mpn: EGNNEncoder or HierEGNNEncoder
+    -seq_mpn: EGNNEncoder or HierEGNNEncoder
+    +struct_loss(): Function
+    +forward(): ReturnType
+    +generate(): ReturnType
+  }
+  class AttRefineDecoder {
+    - W_x: nn.Linear
+    - W_s: nn.Linear
+    - struct_mpn: EGNNEncoder
+    - seq_mpn: EGNNEncoder
+    - W_x0: nn.Sequential
+    - U_i: nn.Linear
+    - target_mpn: EGNNEncoder
+    - W_att: nn.Sequential
+    + attention(Q: Tensor, context: Tensor, cmask: Tensor): Tensor
+    + struct_loss(X: Tensor, mask: Tensor, true_D: Tensor, true_V: Tensor, true_R: Tensor, true_C: Tensor): Tuple
+    + forward(binder: Tuple, target: Tuple, surface: Tuple): ReturnType
+    + generate(target: Tuple, surface: Tuple): ReturnType
+  }
+  class UncondRefineDecoder {
+    - W_x: nn.Linear
+    - W_s: nn.Linear
+    - struct_mpn: EGNNEncoder
+    - seq_mpn: EGNNEncoder
+    - W_x0: nn.Sequential
+    + struct_loss(X: Tensor, mask: Tensor, true_D: Tensor, true_V: Tensor, true_R: Tensor, true_C: Tensor): Tuple
+    + forward(binder: Tuple, target: Tuple, surface: Tuple): ReturnType
+    + generate(target: Tuple, surface: Tuple): ReturnType
+  }
+  class SequenceDecoder {
+    - no_target
+    - W_s
+    - seq_rnn
+    - U_i
+    - target_mpn
+    - W_att
+    + attention(Q, context, cmask)
+    + forward(binder, target, surface)
+    + generate(target, surface)
+  }
+  
+  HierEGNNEncoder *-- EGNNEncoder : init
+  ABModel *-- AAEmbedding : W_i = nn.Linear(self.embedding.dim(), args.hidden_size)
+  ABModel *-- ProteinFeatures : init features
+  RefineDocker *-- EGNNEncoder : init
+  CondRefineDecoder *-- EGNNEncoder : init
+  AttRefineDecoder *-- EGNNEncoder : init
+  ABModel --|> RefineDocker : inherits dihedral features
+  ABModel --|> CondRefineDecoder : Inherits
+  ABModel --|> AttRefineDecoder : Inherits
+  RefineDocker *-- HierEGNNEncoder : init
+  CondRefineDecoder *-- HierEGNNEncoder : init
+  ABModel --|> UncondRefineDecoder : Inherits
+  ABModel --|> SequenceDecoder : Inherits
+  PositionalEncodings --* ProteinFeatures : init
+  PosEmbedding --* AttRefineDecoder : init
+  PosEmbedding --* CondRefineDecoder : init
+  PosEmbedding --* UncondRefineDecoder : init
+  EGNNEncoder <|-- MPNNLayer : init
+  EGNNEncoder <|-- ProteinFeatures : init
 ```
+</div>
+</section>
+
+# Quaternions {.centered-title}
+
+  - A 4-number system that utilises complex numbers for geometric transformations/rotations in 3D space 
+  - Better than Euler angles
+    - Does not suffer from Gimble Lock
+      - Gimble Lock is the case when the Euler angles are not unique and the rotation is not well defined
+
+##
+
+![](HERN_files/animations/Quaternions.mp4)
