@@ -467,7 +467,7 @@ $$
 
 ##
 
-![](HERN_files/animations/Quaternions2.mp4)
+![](HERN_files/animations/Quaternions.mp4)
 
 ::: footer
 [<b>3blue1brown</b>](https://eater.net/quaternions)
