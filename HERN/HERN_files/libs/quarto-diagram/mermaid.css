@@ -14,3 +14,16 @@
 .centered-title {
   text-align: center;
 }
+.slide-title-80 {
+  font-size: 80%;
+}
+.slide-title-60 {
+  font-size: 60%;
+}
+.slide-footer {
+  position: absolute;
+  bottom: 5px;
+  left: 20px;
+  font-size: 12px;
+  line-height: 1.5;
+}

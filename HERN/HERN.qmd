@@ -10,6 +10,9 @@ format:
     preview-links: true
     footer: <https://github.com/Peji-moghimi/sciprez>
     css: HERN_files/libs/quarto-diagram/mermaid.css
+    pandoc_args: --citeproc
+    bibliography: HERN_files/references.bib
+    csl: https://www.zotero.org/styles/nature
 ---
 
 # Background and Motivations
@@ -105,7 +108,7 @@ format:
 
   - The paratope is represented by two graphs:
     - A graph to represent the paratope in terms of its residues.
-      - Each node in the graph only represents $C_{/alpha}$ atom of the residue.
+      - Each node in the graph only represents $C_{\alpha}$ atom of the residue.
     - A graph to represent the paratope in terms of its atoms, including the side chains. 
   - Each node in the graph represents an atom.
   - Each edge in the graph represents a bond between two atoms.
@@ -113,20 +116,6 @@ format:
   - The features of each node consist of the atomic coordinates.
   - The edges in the graph are represented as feature vectors.
   - The features of each edge consist of the bond type.
-
-## Paratope
-
-  - A paratope consists of a set of amino acids.
-  - The amino acids are represented as nodes in the graph.
-  - Each node in the graph could represent a residue or an atom.
-  - Each edge in the graph represents a bond between two residues or atoms.
-
-# Methods
-
-  - Equivariant Graph Neural Networks (EGNNs)
-  - Hierarchical Equivariant Graph Neural Networks (HEGNNs)
-  - Refinement Networks
-  - Hierarchical Equivariant Refinement Networks (HERN)
 
 ## Hierarchical Equivariant Refinement Network (HERN)
   
@@ -137,64 +126,6 @@ format:
     - Computing a loss function based on the predicted and the current coordinates.
   - The refinement process is repeated until the sequence is fully predicted.
   - The message passing is performed in a hierarchical manner for computational efficieny.
-
-# Results
-
-  - Antibody-antigen docking
-  - Antibody-antigen design
-
-=======
-
-
-# Methods
-
-  - Equivariant Graph Neural Networks
-  - Hierarchical Equivariant Refinement Networks
-  - Antibody-Antigen Docking and Design
-
-
-
-=======
-
-
-# Methods
-
-  - Equivariant Graph Neural Networks (EGNNs)
-  - Equivariant Refinement Networks (ERNs)
-  - Hierarchical Equivariant Refinement Networks (HERNs)
-  - Training and evaluation
-
-
-## Training and evaluation
-
-  - The model is trained on a large dataset of antibody-antigen complexes.
-  - The model is evaluated on a small dataset of antibody-antigen complexes.
-  - The model is evaluated on a small dataset of antibody-antigen complexes.
-  - The model is evaluated on a small dataset of antibody-antigen complexes.
-
-# Results
-
-  - HERN is able to dock antibodies to antigens.
-
-=======
-
-# Methods
-
-  - Hierarchical Equivariant Refinement Networks (HERN)
-  - Equivariant Graph Neural Networks (EGNNs)
-  - Unconditional Refinement
-  - Sequence Prediction
-  - Data Processing
-  - Model Training
-  - Prediction
-  - Relaxation
-
-
-## Unconditional Refinement
-
-  - Unconditional refinement is the process of refining an initial structure without any
-
-=======
 
 # Oversmoothing and suspended animation
 
@@ -418,13 +349,157 @@ classDiagram
 </div>
 </section>
 
-# Quaternions {.centered-title}
+# Equations
 
-  - A 4-number system that utilises complex numbers for geometric transformations/rotations in 3D space 
+## equation 1
+
+  - A paratope is a sequence of residuesin the complementarity determining regions (CDRs) of an antibody: 
+    - $\boldsymbol{a}=\boldsymbol{a}_1 \cdots a_n$ 
+  - An epitope is composed of $m$ residues that are closest to a paratope:
+    - $\boldsymbol{b}=\boldsymbol{b}_1 \boldsymbol{b}_2 \cdots \boldsymbol{b}_m$ 
+    - It is a subsequence of an antigen:
+      - $\boldsymbol{c}=\boldsymbol{c}_1 \boldsymbol{c}_2 \cdots \boldsymbol{c}_M$, 
+      - where $\boldsymbol{b}_i=\boldsymbol{c}_{e_i}$ and $e_i$ is the index of epitope residue $\boldsymbol{b}_i$ in the antigen.
+
+## equation 2
+
+::: {style="font-size: 0.85em"}
+  - The epitope 3D structure $\mathcal{G}_b$ is described as a point cloud of atoms:
+    - $\left\{\boldsymbol{b}_{i, j}\right\}_{1 \leq i \leq m, 1 \leq j \leq n_i}$
+      - where $n_i$ is the number of atoms in residue $\boldsymbol{b}_i$. 
+  - The 3D structure of a paratope and a paratope-epitope binding interface is denoted as $\mathcal{G}_a$ and $\mathcal{G}_{a, b}$, respectively. 
+    - The first four atoms in any residue correspond to its backbone atoms $\left(\mathrm{N}, \mathrm{C}_\alpha, \mathrm{C}, \mathrm{O}\right)$ and the rest are its side chain atoms. 
+    - The 3D coordinate of an atom $\boldsymbol{b}_{i, k}$ is denoted as $\boldsymbol{x}\left(\boldsymbol{b}_{i, k}\right) \in \mathbb{R}^3$.
+:::
+
+## Paratope Docking and Generation Formulated as a Joint 3D Point Cloud Completion Task {.slide-title-60 .centered-title}
+
+::: nonincremental
+  - Given a training set of antibody-antigen complexes, HERN learns to append an epitope structure $\mathcal{G}_b$ with paratope atoms to form a binding interface $\mathcal{G}_{a, b}$.
+  - <b>put image here</b>
+:::
+
+## Selecting Epitope Residues 
+
+  - The paratope-epitope binding interface is defined as the set of atoms that are within a distance $d$ of each other:
+    - $\mathcal{G}_{a, b}=\left\{\boldsymbol{a}_{i, j} \mid \boldsymbol{a}_{i, j} \in \mathcal{G}_a, \boldsymbol{b}_{i, k} \in \mathcal{G}_b, \left\|\boldsymbol{x}\left(\boldsymbol{a}_{i, j}\right)-\boldsymbol{x}\left(\boldsymbol{b}_{i, k}\right)\right\| \leq d\right\}$ 
+  - The paratope-epitope binding interface is a subset of the paratope 3D structure $\mathcal{G}_a$.
+
+## ATOM-LEVEL INTERFACE ENCODER
+
+  - The atom-level encoder keeps all the atoms in the point cloud $\mathcal{G}_{a, b}$ and constructs a $K$ nearest neighbor graph $\mathcal{G}_{a, b}^A$. Each node feature is a one-hot encoding of its atom name (e.g., N, $\mathrm{C}_\alpha, \mathrm{C}_\beta, \mathrm{O}$ ).
+  - Each edge feature between two atoms $\left(\boldsymbol{a}_{i, k}, \boldsymbol{b}_{j, l}\right)$ is represented as:
+    - $$
+    \boldsymbol{f}\left(\boldsymbol{a}_{i, k}, \boldsymbol{b}_{j, l}\right)=\operatorname{RBF}\left(\left\|\boldsymbol{x}\left(\boldsymbol{a}_{i, k}\right)-\boldsymbol{x}\left(\boldsymbol{b}_{j, l}\right)\right\|\right)
+    $$
+
+## RESIDUE-LEVEL INTERFACE ENCODER
+
+::: {style="font-size: 0.55em"}
+  - The residue-level encoder only keeps the $\mathrm{C}_\alpha$ atoms and constructs a $K$ nearest neighbor graph $\mathcal{G}_{a, b}^R$ at the residue level. 
+  - Each residue is represented by a feature vector $\boldsymbol{f}\left(\boldsymbol{a}_i\right)$ including:
+    - Amino acid features. Each amino acid is represented by six features: 
+      - polarity $f_p \in\{0,1\}$ 
+      - hydropathy $f_h \in[-4.5,4.5]$ 
+      - volume $f_v \in[60.1,227.8]$
+      - charge $f_c \in\{-1,0,1\}$
+      - whether it is a hydrogen bond donor $f_d \in\{0,1\}$ or acceptor $f_a \in\{0,1\}$.
+    - For hydropathy and volume features, the radial basis is expanded with interval size 0.1 and 10, respectively
+    - &#8594; amino acid feature with 112 dimensions.
+  - It then concatenates the amino acid features with the sum of atom-level $\boldsymbol {h}\left(\boldsymbol{a}_{i, k}\right)$ within that residue as the initial residue representation:
+$$
+\begin{aligned}
+\tilde{\boldsymbol{f}}\left(\boldsymbol{a}_i\right) & =\boldsymbol{f}\left(\boldsymbol{a}_i\right) \oplus \sum_k \boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right) \\
+\tilde{\boldsymbol{f}}\left(\boldsymbol{b}_j\right) & =\boldsymbol{f}\left(\boldsymbol{b}_j\right) \oplus \sum_l \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)
+\end{aligned}
+$$
+:::
+
+## Residue-level edge features
+
+::: {style="font-size: 0.65em"}
+  - Next, it builds a local coordinate frame for each residue and compute edge features $\boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)$ describing the distance, direction, and orientation between nearby residues (Ingraham et al., 2019).
+  - The local coordinate frame for each residue $\boldsymbol{a}_i$ is defined as $\boldsymbol{O}_i=\left[\boldsymbol{c}_i, \boldsymbol{n}_i, \boldsymbol{c}_i \times \boldsymbol{n}_i\right]$, where:
+    - $\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}$
+    - $\quad \boldsymbol{c}_i=\frac{\boldsymbol{u}_i-\boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i-\boldsymbol{u}_{i+1}\right\|}$
+    - $\quad \boldsymbol{n}_i=\frac{\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}\right\|}$
+:::
+
+## Relative Spatial Encodings
+
+::: {style="font-size: 0.5em"}
+  - Ingraham *et al.* [@Ingraham2019-bx] developed invariant and locally informative features 
+  - by augmenting $\boldsymbol{x}_i$ with 'orientations' $\boldsymbol{O}_i$; defined in terms of the backbone geometry as:
+$$
+\boldsymbol{O}_i=\left[\begin{array}{lll}
+\boldsymbol{b}_i & \boldsymbol{n}_i & \boldsymbol{b}_i \times \boldsymbol{n}_i
+\end{array}\right],
+$$
+  - where $\boldsymbol{b}_i$ is the negative bisector of angle between the rays $\left(\boldsymbol{x}_{i-1}-\boldsymbol{x}_i\right)$ and $\left(\boldsymbol{x}_{i+1}-\boldsymbol{x}_i\right)$, and $\boldsymbol{n}_i$ is a unit vector normal to that plane. 
+  - Formally:
+$$
+\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}, \quad \boldsymbol{b}_i=\frac{\boldsymbol{u}_i-\boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i-\boldsymbol{u}_{i+1}\right\|}, \quad \boldsymbol{n}_i=\frac{\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}\right\|}
+$$
+  - Finally, they derived the spatial edge features $e_{i j}^{(s)}$ from the rigid body transformation that relates reference frame $\left(\boldsymbol{x}_i, \boldsymbol{O}_i\right)$ to reference frame $\left(\boldsymbol{x}_j, \boldsymbol{O}_j\right)$. 
+  - Then, decomposed it into features for distance, direction, and orientation as
+$$
+\boldsymbol{e}_{i j}^{(s)}=\left(\mathbf{RBF}\left(\left\|\boldsymbol{x}_j-\boldsymbol{x}_i\right\|\right), \quad \boldsymbol{O}_i^T \frac{\boldsymbol{x}_j-\boldsymbol{x}_i}{\left\|\boldsymbol{x}_j-\boldsymbol{x}_i\right\|}, \quad \mathbf{q}\left(\boldsymbol{O}_i^T \boldsymbol{O}_j\right)\right)
+$$
+  - Here the first vector is a distance encoding $\mathbf{RBF}(\cdot)$ lifted into a radial basis, the second vector is a direction encoding that corresponds to the relative direction of $\boldsymbol{x}_j$ in the reference frame of $\left(\boldsymbol{x}_i, \boldsymbol{O}_i\right)$, and the third vector is an orientation encoding $\mathbf{q}(\cdot)$ of the quaternion representation of the spatial rotation matrix $\boldsymbol{O}_i^T \boldsymbol{O}_j$.
+:::
+
+::: {.notes}
+  - by first augmenting the points $\boldsymbol{x}_i$ with 'orientations' $\boldsymbol{O}_i$ that define a local coordinate system at each point; defined in terms of the backbone geometry as
+  - 
+  - $\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}$ is the direction.
+:::
+<div class="slide-footer">[1] Ingraham *et al.*, Adv. Neural Inf. Process. Syst., 2019, <a href="https://papers.nips.cc/paper_files/paper/2019/hash/f3a4ff4839c56a5f460c88cce3666a2b-Abstract.html" target="_blank">DOI</a></div>
+
+## Quaternions {.centered-title .scrollable}
+
+::: {style="font-size: 0.75em"}
+  - Quaternions represent 3D rotations as four-element vectors that can be efficiently and reasonably compared by inner products.
+  - utilises complex numbers for geometric transformations/rotations in 3D space 
   - Better than Euler angles
     - Does not suffer from Gimble Lock
       - Gimble Lock is the case when the Euler angles are not unique and the rotation is not well defined
+:::
 
 ##
 
-![](HERN_files/animations/Quaternions.mp4)
+![](HERN_files/animations/Quaternions2.mp4)
+
+::: footer
+[<b>3blue1brown</b>](https://eater.net/quaternions)
+:::
+
+## edge feature computation
+
+::: {style="font-size: 0.65em"}
+  - Based on the local frame, we compute the following edge features
+    - $$
+    \boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)=\left(E_{\mathrm{pos}}(i-j), \quad \operatorname{RBF}\left(\left\|\boldsymbol{x}_{i, 1}-\boldsymbol{x}_{j, 1}\right\|\right), \quad \boldsymbol{O}_i^{\top} \frac{\boldsymbol{x}_{j, 1}-\boldsymbol{x}_{i, 1}}{\left\|\boldsymbol{x}_{i, 1}-\boldsymbol{x}_{j, 1}\right\|}, \quad \boldsymbol{q}\left(\boldsymbol{O}_i^{\top} \boldsymbol{O}_j\right)\right)
+    $$
+:::
+
+::: {.notes}
+  - <u><b>Relative positional encodings</b></u>:
+    - As in the original Transformer, we also represent distances between residues in the sequence (rather than space) with positional embeddings $\boldsymbol{e}_{i j}^{(p)}$. 
+    - Positioning of each neighbor $j$ is relative to the node under consideration $i$
+    - As result, we get a position embedding as a sinusoidal function of the gap $i-j$. 
+:::
+
+## Message Passing
+
+::: {style="font-size: 0.65em"}
+  - $\mathcal{G}_{a, b}^A$ is encoded by a MPN which learns a vector representation $\boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right), \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)$ for each paratope atom $\boldsymbol{a}_{i, k}$ and epitope atom $\boldsymbol{b}_{j, l}$.
+  - $$
+  \boldsymbol{h}_{l+1}\left(\boldsymbol{a}_i\right)=\boldsymbol{h}_l\left(\boldsymbol{a}_i\right)+\sum_{j \in \mathcal{N}_i} \operatorname{FFN}\left(\boldsymbol{h}_l\left(\boldsymbol{a}_i\right), \boldsymbol{h}_l\left(\boldsymbol{a}_j\right), \boldsymbol{f}\left(\boldsymbol{a}_j\right), \boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)\right) \quad(0 \leq l<L)
+  $$
+  - $\boldsymbol{h}_l\left(\boldsymbol{a}_i\right)$ is the vector representation of the $i$-th atom $\boldsymbol{a}_i$ after $l$ message passing steps.
+:::
+
+## Refernces
+---
+nocite: '@*'
+---
