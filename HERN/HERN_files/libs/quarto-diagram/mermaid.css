@@ -20,10 +20,23 @@
 .slide-title-60 {
   font-size: 60%;
 }
+.slide-title-20 {
+  font-size: 20%;
+}
 .slide-footer {
   position: absolute;
   bottom: 5px;
   left: 20px;
   font-size: 12px;
   line-height: 1.5;
+}
+.custom-table {
+  width: 100%;
+  margin-top: 10px; /* Adjust this value to control the distance below the title */
+  border-collapse: separate;
+  border-spacing: 15px 0; /* Adjust the first value to control the spacing between images */
+}
+
+.custom-table img {
+  max-width: 150%; /* Adjust this value to control the width of each image */
 }

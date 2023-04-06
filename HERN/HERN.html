@@ -356,7 +356,7 @@
 </div>
 
 </section>
-<section id="background-and-motivations" class="title-slide slide level1 center">
+<section id="background-and-motivations" class="title-slide slide level1 centered-title center">
 <h1>Background and Motivations</h1>
 <div>
 <ul>
@@ -369,32 +369,69 @@
 </section>
 
 <section>
-<section id="introduction" class="title-slide slide level1 center">
+<section id="introduction" class="title-slide slide level1 centered-title center">
 <h1>Introduction</h1>
 <ul>
-<li class="fragment">Antibodies, Paratopes, Epitopes and docking</li>
-<li class="fragment">Graph Neural Networks (GNNs)</li>
-<li class="fragment">Message Passing in GNNs</li>
+<li>Antibodies, Paratopes, Epitopes and docking</li>
+<li>Graph Neural Networks (GNNs) and Equivariant GNNs (EGNNs)</li>
 </ul>
+</section>
+<section id="introduction-to-antibodies" class="slide level2 centered-title">
+<h2>Introduction to Antibodies</h2>
 </section>
 <section id="antibodies-paratopes-epitopes-and-docking" class="slide level2" data-background-color="black" data-background-image="HERN_files/images/figure_antibody_structure_cropped.png" data-background-size="550px" data-background-repeat="repeat" data-background-opacity="0.3">
 <h2>Antibodies, Paratopes, Epitopes and docking</h2>
 <ul>
-<li class="fragment">Antibodies are Y-shaped proteins that bind to antigens.</li>
-<li class="fragment">The antibody’s binding-surface is called the paratope.</li>
-<li class="fragment">An antigen’s binding-surfaces are called the epitopes.
+<li>Antibodies are Y-shaped proteins that bind to antigens.</li>
+<li>The antibody’s binding-surface is called the paratope.</li>
+<li>An antigen’s binding-surfaces are called the epitopes.
 <ul>
-<li class="fragment">An antigen can have multiple epitopes.</li>
+<li>An antigen can have multiple epitopes.</li>
 </ul></li>
-<li class="fragment">Docking is the process of finding the best binding pose of a paratope to an epitope. <img data-src="HERN_files/images/figure_antibody_binding.PNG" class="absolute fragment fade-in-then-out quarto-discovered-preview-image" style="bottom: 10px; right: 1050px; width: 225px; "></li>
+<li>Docking is the process of finding the best binding pose of a paratope to an epitope. <img data-src="HERN_files/images/figure_antibody_binding.PNG" class="absolute fragment fade-in-then-out quarto-discovered-preview-image" style="bottom: 10px; right: 1050px; width: 225px; "></li>
 </ul>
 </section>
-<section id="molecules-as-graphs" class="slide level2">
+<section id="rigid-body-and-semi-flexible-docking" class="slide level2 centered-title">
+<h2>Rigid-body and Semi-flexible Docking</h2>
+
+<table class="custom-table">
+<tbody><tr>
+<td>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="HERN_files/images/HADDOCKanimation_of_rigid-body_minimization.gif"></p>
+<p></p><figcaption>Rigid-body</figcaption><p></p>
+</figure>
+</div>
+</td>
+<td>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="HERN_files/images/haddock_animation_of_semi-flexible_simulated_annealing.gif"></p>
+<p></p><figcaption>Semi-flexible simulated annealing</figcaption><p></p>
+</figure>
+</div>
+</td>
+</tr>
+
+</tbody></table>
+<div class="footer">
+<p>From Bonvin lab: <a href="https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/">HADDOCK2.4 Antibody - Antigen tutorial</a></p>
+</div>
+</section>
+<section id="introduction-to-gnns-and-egnns" class="slide level2 centered-title">
+<h2>Introduction to GNNs and EGNNs</h2>
+</section>
+<section id="relevant-types-of-graphs" class="slide level2">
+<h2>Relevant Types of Graphs</h2>
+<p><img data-src="HERN_files/images/multigraph_exmp.png" class="absolute fragment fade-in" style="bottom: 300px; right: 10px; width: 300px; " alt="Point could graph"> <img data-src="HERN_files/images/point_could_graph.PNG" class="absolute fragment fade-in" style="bottom: 30px; right: 200px; width: 600px; " alt="Point could graph"> <img data-src="HERN_files/images/Hierarchical_graph.PNG" class="absolute fragment fade-in" style="bottom: 300px; right: 400px; width: 600px; " alt="Hierarchical gaph"></p>
+</section>
+<section id="molecules-as-graphs" class="slide level2 centered-title">
 <h2>Molecules as Graphs</h2>
 <ul>
-<li class="fragment">The nodes in the graph represent the atoms of the molecule.</li>
-<li class="fragment">The edges represent the bonds between the atoms.</li>
-<li class="fragment">The graph structure captures the spatial information of the molecule.</li>
+<li>The nodes in the graph represent the atoms of the molecule.</li>
+<li>The edges represent the bonds between the atoms.</li>
+<li>The graph structure captures the spatial information of the molecule.</li>
 </ul>
 </section>
 <section id="section" class="slide level2" data-background-color="white">
@@ -403,129 +440,489 @@
 <p><img data-src="HERN_files/images/caffeine/1680175220679.png" class="absolute fragment" style="bottom: 50px; right: 30px; width: 900px; "></p>
 <p><img data-src="HERN_files/images/caffeine/caffeine_cartoon_molecule.png" class="absolute fragment" style="bottom: 50px; right: 30px; width: 900px; "></p>
 </section>
-<section id="graph-neural-networks-gnns" class="slide level2">
+<section id="graph-neural-networks-gnns" class="slide level2 centered-title">
 <h2>Graph Neural Networks (GNNs)</h2>
+<div style="font-size: 0.9em">
 <ul>
-<li class="fragment"><p>GNNs are a class of neural networks, based on the idea of message passing, that operate on graph-structured data.</p></li>
-<li class="fragment"><p>GNNs have been successfully applied to protein design, molecular docking, drug design, and protein-protein interaction, and other applications.</p></li>
-<li class="fragment"><p>GNNs can be used to model complex molecular interactions.</p>
+<li><p>GNNs are a class of neural networks, based on the idea of message passing, that operate on graph-structured data.</p></li>
+<li><p>GNNs have been successfully applied to protein design, molecular docking, drug design, and protein-protein interaction, and other applications.</p></li>
+<li><p>GNNs can be used to model complex molecular interactions.</p>
 <ul>
-<li class="fragment">The atoms (nodes/vertices) of the molecular graph can be represented by a set of features, and the bonds (edges) can also be represented by a set of features.</li>
-<li class="fragment">The features of the atoms and bonds can be updated by message passing.</li>
+<li>The atoms (nodes/vertices) of the molecular graph can be represented by a set of features, and the bonds (edges) can also be represented by a set of features.</li>
+<li>The features of the atoms and bonds can be updated by message passing.</li>
 </ul></li>
 </ul>
+</div>
 </section>
-<section id="equivariant-graph-neural-networks-egnns" class="slide level2">
+<section id="message-passing-in-gnns" class="slide level2 centered-title">
+<h2>Message Passing in GNNs</h2>
+<div style="font-size: 0.9em">
+<ul>
+<li>Message passing is the process of propagating information through a graph.</li>
+<li>Defines nodes’ and edges’ features in terms of the neighbouring nodes’ and edges’ features.</li>
+<li>The message passing is performed in different ways, multiple times in parallel and a hierarchical manner.</li>
+<li>Nodes’ (Atoms) and edges’ (bonds) features are updated through message passing, resulting in an embedding representation that captures the global and/or local spatial information of the molecule.</li>
+<li>It can be used in both supervised and unsupervised learning.</li>
+</ul>
+</div>
+</section>
+<section id="message-passing-in-gnns-1" class="slide level2 centered-title">
+<h2>Message Passing in GNNs</h2>
+<ul>
+<li>Message computation:
+<ul>
+<li><span class="math inline">\(m_{u-&gt;v}^t = M(h_u^t, h_v^t, e_{u-&gt;v})\)</span></li>
+</ul></li>
+<li>Message aggregation:
+<ul>
+<li><span class="math inline">\(a_v^t = A({m_{u-&gt;v}^t | u ∈ N(v)})\)</span></li>
+</ul></li>
+<li>Node update:
+<ul>
+<li><span class="math inline">\(h_v^{t+1} = U(h_v^t, a_v^t)\)</span></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<ul>
+<li><p>The message passing process in GNNs typically consists of three steps: message computation, message aggregation, and node update. Let’s go through each step:</p>
+<ul>
+<li>Message computation: In this step, messages are computed for each directed edge (u, v) in the graph, where u is the sender node and v is the receiver node. The messages are usually computed as a function of the features of the sender node and the edge:
+<ul>
+<li><span class="math inline">\(m_{u-&gt;v}^t = M(h_u^t, h_v^t, e_{u-&gt;v})\)</span></li>
+<li>Here, m_{u-&gt;v}^t denotes the message sent from node u to node v at iteration t, h_u^t and h_v^t are the feature vectors of nodes u and v at iteration t, e_{u-&gt;v} is the feature vector of the edge from node u to node v, and M is the message function.</li>
+</ul></li>
+<li>Message aggregation: In this step, messages received by each node are aggregated to compute an aggregated message for each node:
+<ul>
+<li>a_v^t = A({m_{u-&gt;v}^t | u ∈ N(v)})</li>
+<li>Here, a_v^t denotes the aggregated message for node v at iteration t, N(v) represents the set of neighboring nodes of v, and A is the aggregation function.</li>
+</ul></li>
+<li>Node update: In this step, the aggregated messages are used to update the feature vectors of the nodes:
+<ul>
+<li>h_v^{t+1} = U(h_v^t, a_v^t)</li>
+<li>Here, h_v^{t+1} denotes the updated feature vector of node v at iteration t+1, and U is the update function.</li>
+</ul></li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="oversmoothing-in-naivestandard-deep-gnns" class="slide level2 slide-title-60 centered-title">
+<h2>Oversmoothing in Naive/Standard Deep GNNs</h2>
+
+<table class="custom-table">
+<tbody><tr>
+<td>
+<img data-src="HERN_files/animations/caffeine_graph_Gauss-bluring.gif">
+</td>
+<td>
+<img data-src="HERN_files/animations/standard_GNNs.gif">
+</td>
+</tr>
+
+</tbody></table>
+</section>
+<section id="equivariant-graph-neural-networks-egnns" class="slide level2 centered-title">
 <h2>Equivariant Graph Neural Networks (EGNNs)</h2>
+<div style="font-size: 0.85em">
 <ul>
-<li class="fragment">Equivariance is a property of a function that allows it to be invariant to a certain transformation.</li>
-<li class="fragment">In the context of GNNs, equivariance is a property of the GNN that allows it to be invariant to a certain transformation on the graph.</li>
-<li class="fragment">EGNNs are GNNs that are equivariant to graph isomorphism.
+<li>Equivariance is a property of a function that allows it to be invariant to a certain transformation depending on the transformation group, e.g.&nbsp;SO(3) and E(3).</li>
+<li>EGNNs are GNNs that are equivariant to graph isomorphism.
 <ul>
-<li class="fragment">isomorphism is a transformation that preserves the graph structure.</li>
-<li class="fragment">I.e. EGNNs are invariant to group structure and the order of nodes in the graph.</li>
+<li>isomorphism is a transformation that preserves the graph structure.</li>
+<li>I.e. EGNNs are equivariant to group structure and the order of nodes in the graph.</li>
 </ul></li>
+<li>Crucially, EGNNs explicitly encode the graph’s symmetries and local structure into their architecture by employing specialized layers or operations that are designed to be sensitive to the graph’s structure and the specified symmetries.</li>
+<li>HERN simultaneously folds and docks the paratope.</li>
 </ul>
-</section>
-<section id="message-passing-in-gnns" class="slide level2">
-<h2>Message Passing in GNNs</h2>
-<ul>
-<li class="fragment">Message passing is the process of propagating information through a graph.</li>
-<li class="fragment">Defines nodes’ and/or edges’ features in terms of the neighbouring nodes’ and/or edges’ features.</li>
-<li class="fragment">The message passing is performed in different ways, multiple times in parallel and a hierarchical manner.</li>
-<li class="fragment">Nodes’ (Atoms) and edges’ (bonds) features are updated through message passing, resulting in an embedding representation that captures the global and/or local spatial information of the molecule.</li>
-<li class="fragment">It can be used in both supervised and unsupervised learning.</li>
-</ul>
-</section>
-<section id="message-passing-in-gnns-1" class="slide level2 scrollable">
-<h2>Message Passing in GNNs</h2>
-<ul>
-<li class="fragment">The message passing process in GNNs is based on the following equation: <span class="math display">\[
-  \mathbf{h}_i^{\left(t+1\right)} = \sigma\left(\mathbf{W}_h\mathbf{h}_i^{\left(t\right)} + \sum_{j\in \mathcal{N}(i)} \mathbf{W}_e \mathbf{e}_{ij}^{\left(t\right)}\right)
-  \]</span></li>
-<li class="fragment">Where <span class="math inline">\(\mathbf{h}_i^{\left(t\right)}\)</span> is the node feature vector at time <span class="math inline">\(t\)</span> for node <span class="math inline">\(i\)</span>, where time is the number of message passing steps.</li>
-<li class="fragment"><span class="math inline">\(\mathbf{W}_h\)</span> is the weight matrix for the node features.</li>
-<li class="fragment"><span class="math inline">\(\mathbf{e}_{ij}^{\left(t\right)}\)</span> is the edge feature vector at time <span class="math inline">\(t\)</span> between node <span class="math inline">\(i\)</span> and node <span class="math inline">\(j\)</span>.</li>
-<li class="fragment"><span class="math inline">\(\mathbf{W}_e\)</span> is the weight matrix for the edge features.</li>
-<li class="fragment"><span class="math inline">\(\mathcal{N}(i)\)</span> is the set of neighbors of node <span class="math inline">\(i\)</span>.</li>
-<li class="fragment"><span class="math inline">\(\sigma\)</span> is the activation function.</li>
-</ul>
-</section>
-<section id="message-passing-in-gnns-2" class="slide level2">
-<h2>Message Passing in GNNs</h2>
-<ul>
-<li class="fragment">Message passing steps are as follows:
-<ul>
-<li class="fragment">Reading the node features <span class="math inline">\(\mathbf{h}_i^{\left(t\right)}\)</span>.</li>
-<li class="fragment">Reading the edge features <span class="math inline">\(\mathbf{e}_{ij}^{\left(t\right)}\)</span>.</li>
-<li class="fragment">Aggregating the node features by an aggregation function <span class="math inline">\(\mathcal{A}\)</span>.</li>
-<li class="fragment">Updating the node features by a message function <span class="math inline">\(\mathcal{M}\)</span>.</li>
-<li class="fragment">Passing the updated node features to the next node.</li>
-<li class="fragment">For each node <span class="math inline">\(i\)</span> in the graph, update its feature vector <span class="math inline">\(h_i\)</span> with the features of its neighbours.</li>
-</ul></li>
-</ul>
-</section>
-<section id="problem-formulation" class="slide level2">
-<h2>Problem Formulation</h2>
-<ul>
-<li class="fragment">Given a protein-protein complex and a paratope, find the best docking pose of the paratope to the epitope.</li>
-<li class="fragment">The problem is formulated as a graph neural network problem.</li>
-<li class="fragment">The input consists of a paratope-epitope represented as a graph.</li>
-<li class="fragment">The output consists of the best docking pose of the paratope to the epitope.</li>
-</ul>
-</section>
-<section id="paratope-epitope-complex" class="slide level2">
-<h2>Paratope-Epitope Complex</h2>
-<ul>
-<li class="fragment">The paratope is represented by two graphs:
-<ul>
-<li class="fragment">A graph to represent the paratope in terms of its residues.
-<ul>
-<li class="fragment">Each node in the graph only represents <span class="math inline">\(C_{\alpha}\)</span> atom of the residue.</li>
-</ul></li>
-<li class="fragment">A graph to represent the paratope in terms of its atoms, including the side chains.</li>
-</ul></li>
-<li class="fragment">Each node in the graph represents an atom.</li>
-<li class="fragment">Each edge in the graph represents a bond between two atoms.</li>
-<li class="fragment">The nodes in the graph are represented as feature vectors.</li>
-<li class="fragment">The features of each node consist of the atomic coordinates.</li>
-<li class="fragment">The edges in the graph are represented as feature vectors.</li>
-<li class="fragment">The features of each edge consist of the bond type.</li>
-</ul>
-</section>
-<section id="hierarchical-equivariant-refinement-network-hern" class="slide level2">
-<h2>Hierarchical Equivariant Refinement Network (HERN)</h2>
-<ul>
-<li class="fragment">Refinement Networks are neural networks that iteratively refine a set of initial coordinates.</li>
-<li class="fragment">The refinement process consists of:
-<ul>
-<li class="fragment">Predicting the next residue in the sequence.</li>
-<li class="fragment">Predicting the next set of coordinates based on the current coordinates and the predicted residue.</li>
-<li class="fragment">Computing a loss function based on the predicted and the current coordinates.</li>
-</ul></li>
-<li class="fragment">The refinement process is repeated until the sequence is fully predicted.</li>
-<li class="fragment">The message passing is performed in a hierarchical manner for computational efficieny.</li>
-</ul>
+</div>
 </section></section>
 <section>
-<section id="oversmoothing-and-suspended-animation" class="title-slide slide level1 center">
-<h1>Oversmoothing and suspended animation</h1>
+<section id="hierarchical-equivariant-iterative-refinement-network-hern" class="title-slide slide level1 centered-title center">
+<h1>Hierarchical Equivariant Iterative Refinement Network (HERN)</h1>
 
-<img data-src="HERN_files/animations/caffeine_graph_Gauss-bluring.gif" class="r-stretch"></section>
+</section>
+<section id="overview" class="slide level2 centered-title">
+<h2>Overview</h2>
+</section>
+<section id="problem-formulation" class="slide level2 centered-title">
+<h2>Problem Formulation</h2>
+<div style="font-size: 0.65em">
+<ul>
+<li class="fragment">Given an epitope structure and a paratope sequence:
+<ul>
+<li class="fragment">Find the best docking pose of the paratope to the epitope, formulated as a Joint 3D Point Cloud Completion Task.</li>
+</ul></li>
+<li class="fragment">Given an epitope structure:
+<ul>
+<li class="fragment">Generate a paratope sequence with high affinity to the epitope.</li>
+</ul></li>
+<li class="fragment">Given a training set of antibody-antigen complexes, HERN learns to append an epitope structure <span class="math inline">\(\mathcal{G}_b\)</span> with paratope atoms to form a binding interface <span class="math inline">\(\mathcal{G}_{a, b}\)</span>.</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>Given a paratope-epitope complex: find the best docking pose of the paratope to the epitope.</li>
+<li>The problem is formulated as a graph neural network problem.</li>
+<li>The input consists of a paratope-epitope represented as a graph.</li>
+<li>The output consists of the best docking pose of the paratope to the epitope.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="paratope-and-epitope" class="slide level2 centered-title">
+<h2>Paratope and Epitope</h2>
+<div style="font-size: 0.65em">
+<ul>
+<li class="fragment">A paratope is a sequence of residuesin the complementarity determining regions (CDRs) of an antibody:
+<ul>
+<li class="fragment"><span class="math inline">\(\boldsymbol{a}=\boldsymbol{a}_1 \cdots a_n\)</span></li>
+</ul></li>
+<li class="fragment">An epitope is composed of <span class="math inline">\(m\)</span> residues that are closest to a paratope:
+<ul>
+<li class="fragment"><span class="math inline">\(\boldsymbol{b}=\boldsymbol{b}_1 \boldsymbol{b}_2 \cdots \boldsymbol{b}_m\)</span></li>
+<li class="fragment">It is a subsequence of an antigen:
+<ul>
+<li class="fragment"><span class="math inline">\(\boldsymbol{c}=\boldsymbol{c}_1 \boldsymbol{c}_2 \cdots \boldsymbol{c}_M\)</span>,</li>
+<li class="fragment">where <span class="math inline">\(\boldsymbol{b}_i=\boldsymbol{c}_{e_i}\)</span> and <span class="math inline">\(e_i\)</span> is the index of epitope residue <span class="math inline">\(\boldsymbol{b}_i\)</span> in the antigen.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>The paratope is represented by two graphs:
+<ul>
+<li>A graph to represent the paratope in terms of its residues.
+<ul>
+<li>Each node in the graph only represents <span class="math inline">\(C_{\alpha}\)</span> atom of the residue.</li>
+</ul></li>
+<li>A graph to represent the paratope in terms of its atoms, including the side chains.</li>
+</ul></li>
+<li>Each node in the graph represents an atom.</li>
+<li>Each edge in the graph represents a bond between two atoms.</li>
+<li>The nodes in the graph are represented as feature vectors.</li>
+<li>The features of each node consist of the atomic coordinates.</li>
+<li>The edges in the graph are represented as feature vectors.</li>
+<li>The features of each edge consist of the bond type.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="paratope-and-epitope-1" class="slide level2 centered-title">
+<h2>Paratope and Epitope</h2>
+<div style="font-size: 0.85em">
+<ul>
+<li>The epitope 3D structure <span class="math inline">\(\mathcal{G}_b\)</span> is described as a point cloud of atoms:
+<ul>
+<li><span class="math inline">\(\left\{\boldsymbol{b}_{i, j}\right\}_{1 \leq i \leq m, 1 \leq j \leq n_i}\)</span>
+<ul>
+<li>where <span class="math inline">\(n_i\)</span> is the number of atoms in residue <span class="math inline">\(\boldsymbol{b}_i\)</span>.</li>
+</ul></li>
+</ul></li>
+<li>The 3D structure of a paratope and a paratope-epitope binding interface is denoted as <span class="math inline">\(\mathcal{G}_a\)</span> and <span class="math inline">\(\mathcal{G}_{a, b}\)</span>, respectively.
+<ul>
+<li>The first four atoms in any residue correspond to its backbone atoms <span class="math inline">\(\left(\mathrm{N}, \mathrm{C}_\alpha, \mathrm{C}, \mathrm{O}\right)\)</span> and the rest are its side chain atoms.</li>
+<li>The 3D coordinate of an atom <span class="math inline">\(\boldsymbol{b}_{i, k}\)</span> is denoted as <span class="math inline">\(\boldsymbol{x}\left(\boldsymbol{b}_{i, k}\right) \in \mathbb{R}^3\)</span>.</li>
+</ul></li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>The paratope is represented by two graphs:
+<ul>
+<li>A graph to represent the paratope in terms of its residues.
+<ul>
+<li>Each node in the graph only represents <span class="math inline">\(C_{\alpha}\)</span> atom of the residue.</li>
+</ul></li>
+<li>A graph to represent the paratope in terms of its atoms, including the side chains.</li>
+</ul></li>
+<li>Each node in the graph represents an atom.</li>
+<li>Each edge in the graph represents a bond between two atoms.</li>
+<li>The nodes in the graph are represented as feature vectors.</li>
+<li>The features of each node consist of the atomic coordinates.</li>
+<li>The edges in the graph are represented as feature vectors.</li>
+<li>The features of each edge consist of the bond type.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
 <section id="docking" class="slide level2">
 <h2>Docking</h2>
-<div>
-<p><img data-src="HERN_files/images/HADDOCKanimation_of_rigid-body_minimization.gif" class="absolute fragment" style="bottom: 110px; right: 130px; width: 300px; "></p>
-<p><img data-src="HERN_files/images/haddock_animation_of_refinement_in_explicit_solvent_water.gif" class="absolute" style="top: 170px; left: 30px; width: 400px; height: 400px; "></p>
-<p><img data-src="HERN_files/images/haddock_animation_of_semi-flexible_simulated_annealing.gif" class="absolute fragment" style="top: 150px; right: 80px; width: 450px; "></p>
+</section>
+<section id="step-0-setting-node-coordinates" class="slide level2 centered-title">
+<h2>Step 0 setting Node Coordinates</h2>
+<div style="font-size: 0.55em">
+<ul>
+<li><p>Random initialization: <span class="math display">\[
+\boldsymbol{x}^{(0)}\left(\boldsymbol{a}_{i, k}\right)=\frac{1}{m} \sum_i \boldsymbol{x}\left(\boldsymbol{b}_{i, 1}\right)+\epsilon, \quad \epsilon \sim \mathcal{N}(0,1),
+\]</span></p></li>
+<li><p>Distance-based initialization: <span class="math display">\[
+\boldsymbol{D}_{i, j}= \begin{cases}\left\|\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_i\right)-\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_j\right)\right\| &amp; i, j \leq n \\ \left\|\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_i\right)-\boldsymbol{h}\left(\boldsymbol{b}_j\right)\right\| &amp; i \leq n, j&gt;n \\ \left\|\boldsymbol{x}\left(\boldsymbol{b}_i\right)-\boldsymbol{x}\left(\boldsymbol{b}_j\right)\right\| &amp; i, j&gt;n\end{cases}
+\]</span></p></li>
+<li><p>Eigenvalue decomposition: <span class="math display">\[
+\tilde{\boldsymbol{D}}_{i, j}=0.5\left(\boldsymbol{D}_{i, 1}^2+\boldsymbol{D}_{1, j}^2-\boldsymbol{D}_{i, j}^2\right), \quad \tilde{\boldsymbol{D}}=\boldsymbol{U} \boldsymbol{S} \boldsymbol{U}^{\top}
+\]</span></p></li>
+</ul>
 </div>
+<aside class="notes">
+<ul>
+<li><p>Random initialization: Randomly initialize all coordinates by adding a small Gaussian noise around the center of the epitope <span class="math inline">\(\left(b_{i, 1}\right.\)</span> means the <span class="math inline">\(\mathrm{C}_\alpha\)</span> atom of residue <span class="math inline">\(\left.\boldsymbol{b}_i\right)\)</span> <span class="math display">\[
+\boldsymbol{x}^{(0)}\left(\boldsymbol{a}_{i, k}\right)=\frac{1}{m} \sum_i \boldsymbol{x}\left(\boldsymbol{b}_{i, 1}\right)+\epsilon, \quad \epsilon \sim \mathcal{N}(0,1),
+\]</span> where the epitope center is defined as the mean of epitope <span class="math inline">\(\mathrm{C}_\alpha\)</span> atoms. From now on, we will abbreviate paratope coordinates <span class="math inline">\(\boldsymbol{x}^{(0)}\left(\boldsymbol{a}_{i, k}\right)\)</span> as <span class="math inline">\(\boldsymbol{x}_{i, k}^{(0)}\)</span> to simplify notation.</p></li>
+<li><p>Distance-based initialization: Another strategy is to directly predict the pairwise distance <span class="math inline">\(\boldsymbol{D} \in \mathbb{R}^{(n+m) \times(n+m)}\)</span> between paratope and epitope atoms and reconstruct atom coordinates from <span class="math inline">\(\boldsymbol{D}\)</span>. Specifically, let <span class="math inline">\(\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_i\right)=\operatorname{FFN}\left(\boldsymbol{f}\left(\boldsymbol{a}_i\right)\right)\)</span> be the initial representation of a paratope residue. We predict the pairwise distance as the following: <span class="math display">\[
+\boldsymbol{D}_{i, j}= \begin{cases}\left\|\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_i\right)-\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_j\right)\right\| &amp; i, j \leq n \\ \left\|\boldsymbol{h}^{(0)}\left(\boldsymbol{a}_i\right)-\boldsymbol{h}\left(\boldsymbol{b}_j\right)\right\| &amp; i \leq n, j&gt;n \\ \left\|\boldsymbol{x}\left(\boldsymbol{b}_i\right)-\boldsymbol{x}\left(\boldsymbol{b}_j\right)\right\| &amp; i, j&gt;n\end{cases}
+\]</span> Intuitively, if <span class="math inline">\(i\)</span> belongs to the paratope ( <span class="math inline">\(i \leq n\)</span> ) and <span class="math inline">\(j\)</span> to the epitope <span class="math inline">\((j&gt;n), \boldsymbol{D}_{i, j}\)</span> is the Euclidean distance between <span class="math inline">\(\boldsymbol{h}_{\text {seq }}\left(\boldsymbol{a}_i\right)\)</span> and the antigen encoding <span class="math inline">\(\boldsymbol{h}\left(\boldsymbol{c}_{e_j}\right)\)</span>. Similarly, the distance between two paratope residues is modeled as the Euclidean distance between their sequence representations <span class="math inline">\(h_{\text {seq }}\)</span>. The distance between two epitope residues are directly calculated from their given coordinates <span class="math inline">\(\boldsymbol{x}\left(\boldsymbol{b}_i\right)\)</span>.</p></li>
+<li><p>Eigenvalue decomposition: Given this pairwise distance matrix <span class="math inline">\(\boldsymbol{D}\)</span>, we can obtain the 3D coordinates of each residue via eigenvalue decomposition of the following Gram matrix (Crippen &amp; Havel, 1978) <span class="math display">\[
+\tilde{\boldsymbol{D}}_{i, j}=0.5\left(\boldsymbol{D}_{i, 1}^2+\boldsymbol{D}_{1, j}^2-\boldsymbol{D}_{i, j}^2\right), \quad \tilde{\boldsymbol{D}}=\boldsymbol{U} \boldsymbol{S} \boldsymbol{U}^{\top}
+\]</span> where <span class="math inline">\(S\)</span> is a diagonal matrix with eigenvalues in descending order. The coordinate of each residue <span class="math inline">\(\boldsymbol{a}_i\)</span> is calculated as <span class="math display">\[
+\tilde{\boldsymbol{x}}_i^{(0)}=\left[\boldsymbol{X}_{i, 1}, \boldsymbol{X}_{i, 2}, \boldsymbol{X}_{i, 3}\right], \quad \boldsymbol{X}=\boldsymbol{U} \sqrt{\boldsymbol{S}} .
+\]</span></p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="step-0---setting-node-coordinates" class="slide level2 centered-title">
+<h2>Step 0 - setting Node Coordinates</h2>
+<p><img data-src="HERN_files/images/HERN_step_0.PNG" class="absolute fragment fade-in-then-out" style="bottom: 100px; right: 300px; width: 600px; "> <img data-src="HERN_files/images/HERN_step_0_0.5.PNG" class="absolute fragment fade-in" style="bottom: 100px; right: 300px; width: 600px; "></p>
+</section>
+<section id="step-1---hierarchical-encoding" class="slide level2 centered-title">
+<h2>Step 1 - Hierarchical Encoding</h2>
+<p><img data-src="HERN_files/images/HERN_step_1_0.PNG" class="absolute fragment fade-in-then-out" style="bottom: 100px; right: 300px; width: 275px; "> <img data-src="HERN_files/images/HERN_step_1_1.PNG" class="absolute fragment fade-in" style="bottom: 100px; right: 300px; width: 600px; "> <img data-src="HERN_files/images/HERN_step_1_2.PNG" class="absolute fragment fade-in-then-out" style="bottom: 100px; right: 300px; width: 600px; "> <img data-src="HERN_files/images/HERN_step_1_3.PNG" class="absolute fragment fade-in" style="bottom: 100px; right: 300px; width: 600px; "></p>
+</section>
+<section id="atom-level-interface-encoder" class="slide level2 centered-title">
+<h2>Atom-Level Interface Encoder</h2>
+<ul>
+<li>The atom-level encoder keeps all the atoms in the point cloud <span class="math inline">\(\mathcal{G}_{a, b}\)</span> and constructs a <span class="math inline">\(K\)</span> nearest neighbor graph <span class="math inline">\(\mathcal{G}_{a, b}^A\)</span>. Each node feature is a one-hot encoding of its atom name (e.g., N, <span class="math inline">\(\mathrm{C}_\alpha, \mathrm{C}_\beta, \mathrm{O}\)</span> ).</li>
+<li>Each edge feature between two atoms <span class="math inline">\(\left(\boldsymbol{a}_{i, k}, \boldsymbol{b}_{j, l}\right)\)</span> is represented as:
+<ul>
+<li><span class="math display">\[
+\boldsymbol{f}\left(\boldsymbol{a}_{i, k}, \boldsymbol{b}_{j, l}\right)=\operatorname{RBF}\left(\left\|\boldsymbol{x}\left(\boldsymbol{a}_{i, k}\right)-\boldsymbol{x}\left(\boldsymbol{b}_{j, l}\right)\right\|\right)
+\]</span></li>
+</ul></li>
+<li>Finally, <span class="math inline">\(\mathcal{G}_{a, b}^A\)</span> is encoded by a MPN to learn a vector representation <span class="math inline">\(\boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right), \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)\)</span> for each paratope atom <span class="math inline">\(\boldsymbol{a}_{i, k}\)</span> and epitope atom <span class="math inline">\(\boldsymbol{b}_{j, l}\)</span>.</li>
+</ul>
+</section>
+<section id="residue-level-interface-encoder" class="slide level2 centered-title">
+<h2>Residue-Level Interface Encoder</h2>
+<div style="font-size: 0.55em">
+<ul>
+<li>The residue-level encoder only keeps the <span class="math inline">\(\mathrm{C}_\alpha\)</span> atoms and constructs a <span class="math inline">\(K\)</span> nearest neighbor graph <span class="math inline">\(\mathcal{G}_{a, b}^R\)</span> at the residue level.</li>
+<li>Each residue is represented by a feature vector <span class="math inline">\(\boldsymbol{f}\left(\boldsymbol{a}_i\right)\)</span> including:
+<ul>
+<li>Amino acid features. Each amino acid is represented by six features:
+<ul>
+<li>polarity <span class="math inline">\(f_p \in\{0,1\}\)</span></li>
+<li>hydropathy <span class="math inline">\(f_h \in[-4.5,4.5]\)</span></li>
+<li>volume <span class="math inline">\(f_v \in[60.1,227.8]\)</span></li>
+<li>charge <span class="math inline">\(f_c \in\{-1,0,1\}\)</span></li>
+<li>whether it is a hydrogen bond donor <span class="math inline">\(f_d \in\{0,1\}\)</span> or acceptor <span class="math inline">\(f_a \in\{0,1\}\)</span>.</li>
+</ul></li>
+<li>For hydropathy and volume features, the radial basis is expanded with interval size 0.1 and 10, respectively</li>
+<li>→ amino acid feature with 112 dimensions.</li>
+</ul></li>
+<li>It then concatenates the amino acid features with the sum of atom-level <span class="math inline">\(\boldsymbol {h}\left(\boldsymbol{a}_{i, k}\right)\)</span> within that residue as the initial residue representation: <span class="math display">\[
+\begin{aligned}
+\tilde{\boldsymbol{f}}\left(\boldsymbol{a}_i\right) &amp; =\boldsymbol{f}\left(\boldsymbol{a}_i\right) \oplus \sum_k \boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right) \\
+\tilde{\boldsymbol{f}}\left(\boldsymbol{b}_j\right) &amp; =\boldsymbol{f}\left(\boldsymbol{b}_j\right) \oplus \sum_l \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)
+\end{aligned}
+\]</span></li>
+</ul>
+</div>
+</section>
+<section id="residue-level-edge-features" class="slide level2 centered-title">
+<h2>Residue-level edge features</h2>
+<div style="font-size: 0.95em">
+<ul>
+<li>Next, it builds a local coordinate frame for each residue and compute edge features <span class="math inline">\(\boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)\)</span> describing the distance, direction, and orientation between nearby residues (Ingraham et al., 2019).</li>
+<li>The local coordinate frame for each residue <span class="math inline">\(\boldsymbol{a}_i\)</span> is defined as <span class="math inline">\(\boldsymbol{O}_i=\left[\boldsymbol{c}_i, \boldsymbol{n}_i, \boldsymbol{c}_i \times \boldsymbol{n}_i\right]\)</span>, where:
+<ul>
+<li><span class="math inline">\(\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}\)</span></li>
+<li><span class="math inline">\(\quad \boldsymbol{c}_i=\frac{\boldsymbol{u}_i-\boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i-\boldsymbol{u}_{i+1}\right\|}\)</span></li>
+<li><span class="math inline">\(\quad \boldsymbol{n}_i=\frac{\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}\right\|}\)</span></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="relative-spatial-encodings" class="slide level2 centered-title">
+<h2>Relative Spatial Encodings</h2>
+<div style="font-size: 0.5em">
+<ul>
+<li>Ingraham <em>et al.</em><span class="citation" data-cites="Ingraham2019-bx"><sup><a href="#/refernces" role="doc-biblioref" onclick="">1</a></sup></span> developed invariant and locally informative features</li>
+<li>by augmenting <span class="math inline">\(\boldsymbol{x}_i\)</span> with ‘orientations’ <span class="math inline">\(\boldsymbol{O}_i\)</span>; defined in terms of the backbone geometry as: <span class="math display">\[
+\boldsymbol{O}_i=\left[\begin{array}{lll}
+\boldsymbol{b}_i &amp; \boldsymbol{n}_i &amp; \boldsymbol{b}_i \times \boldsymbol{n}_i
+\end{array}\right],
+\]</span></li>
+<li>where <span class="math inline">\(\boldsymbol{b}_i\)</span> is the negative bisector of angle between the rays <span class="math inline">\(\left(\boldsymbol{x}_{i-1}-\boldsymbol{x}_i\right)\)</span> and <span class="math inline">\(\left(\boldsymbol{x}_{i+1}-\boldsymbol{x}_i\right)\)</span>, and <span class="math inline">\(\boldsymbol{n}_i\)</span> is a unit vector normal to that plane.</li>
+<li>Formally: <span class="math display">\[
+\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}, \quad \boldsymbol{b}_i=\frac{\boldsymbol{u}_i-\boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i-\boldsymbol{u}_{i+1}\right\|}, \quad \boldsymbol{n}_i=\frac{\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}\right\|}
+\]</span></li>
+<li>Finally, they derived the spatial edge features <span class="math inline">\(e_{i j}^{(s)}\)</span> from the rigid body transformation that relates reference frame <span class="math inline">\(\left(\boldsymbol{x}_i, \boldsymbol{O}_i\right)\)</span> to reference frame <span class="math inline">\(\left(\boldsymbol{x}_j, \boldsymbol{O}_j\right)\)</span>.</li>
+<li>Then, decomposed it into features for distance, direction, and orientation as <span class="math display">\[
+\boldsymbol{e}_{i j}^{(s)}=\left(\mathbf{RBF}\left(\left\|\boldsymbol{x}_j-\boldsymbol{x}_i\right\|\right), \quad \boldsymbol{O}_i^T \frac{\boldsymbol{x}_j-\boldsymbol{x}_i}{\left\|\boldsymbol{x}_j-\boldsymbol{x}_i\right\|}, \quad \mathbf{q}\left(\boldsymbol{O}_i^T \boldsymbol{O}_j\right)\right)
+\]</span></li>
+<li>Here the first vector is a distance encoding <span class="math inline">\(\mathbf{RBF}(\cdot)\)</span> lifted into a radial basis, the second vector is a direction encoding that corresponds to the relative direction of <span class="math inline">\(\boldsymbol{x}_j\)</span> in the reference frame of <span class="math inline">\(\left(\boldsymbol{x}_i, \boldsymbol{O}_i\right)\)</span>, and the third vector is an orientation encoding <span class="math inline">\(\mathbf{q}(\cdot)\)</span> of the quaternion representation of the spatial rotation matrix <span class="math inline">\(\boldsymbol{O}_i^T \boldsymbol{O}_j\)</span>.</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>by first augmenting the points <span class="math inline">\(\boldsymbol{x}_i\)</span> with ‘orientations’ <span class="math inline">\(\boldsymbol{O}_i\)</span> that define a local coordinate system at each point; defined in terms of the backbone geometry as</li>
+<li></li>
+<li><span class="math inline">\(\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}\)</span> is the direction.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<div class="slide-footer">
+[1] Ingraham <em>et al.</em>, Adv. Neural Inf. Process. Syst., 2019, <a href="https://papers.nips.cc/paper_files/paper/2019/hash/f3a4ff4839c56a5f460c88cce3666a2b-Abstract.html" target="_blank">DOI</a>
+</div>
+</section>
+<section id="quaternions" class="slide level2 centered-title scrollable">
+<h2>Quaternions</h2>
+<div style="font-size: 0.75em">
+<ul>
+<li>Quaternions represent 3D rotations as four-element vectors that can be efficiently and reasonably compared by inner products.</li>
+<li>utilises complex numbers for geometric transformations/rotations in 3D space</li>
+<li>Better than Euler angles
+<ul>
+<li>Does not suffer from Gimble Lock
+<ul>
+<li>Gimble Lock is the case when the Euler angles are not unique and the rotation is not well defined</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="quaternions-1" class="slide level2 centered-title">
+<h2>Quaternions</h2>
+<p><video data-src="HERN_files/animations/Quaternions.mp4" class="absolute fragment fade-out" style="bottom: 50px; right: 30px; width: 900px; " controls=""><a href="HERN_files/animations/Quaternions.mp4">Video</a></video> <img data-src="HERN_files/images/quaternions.png" class="absolute fragment" style="bottom: 30px; right: 30px; width: 900px; "></p>
 <div class="footer">
-<p>From Bonvin lab: <a href="https://www.bonvinlab.org/education/HADDOCK24/HADDOCK24-antibody-antigen/">HADDOCK2.4 Antibody - Antigen tutorial</a></p>
+<p><a href="https://eater.net/quaternions"><b>3blue1brown</b></a></p>
+</div>
+</section>
+<section id="edge-feature-computation" class="slide level2 centered-title">
+<h2>edge feature computation</h2>
+<div style="font-size: 0.65em">
+<ul>
+<li>Based on the local frame, we compute the following edge features
+<ul>
+<li><span class="math display">\[
+\boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)=\left(E_{\mathrm{pos}}(i-j), \quad \operatorname{RBF}\left(\left\|\boldsymbol{x}_{i, 1}-\boldsymbol{x}_{j, 1}\right\|\right), \quad \boldsymbol{O}_i^{\top} \frac{\boldsymbol{x}_{j, 1}-\boldsymbol{x}_{i, 1}}{\left\|\boldsymbol{x}_{i, 1}-\boldsymbol{x}_{j, 1}\right\|}, \quad \boldsymbol{q}\left(\boldsymbol{O}_i^{\top} \boldsymbol{O}_j\right)\right)
+\]</span></li>
+</ul></li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li><u><b>Relative positional encodings</b></u>:
+<ul>
+<li>As in the original Transformer, we also represent distances between residues in the sequence (rather than space) with positional embeddings <span class="math inline">\(\boldsymbol{e}_{i j}^{(p)}\)</span>.</li>
+<li>Positioning of each neighbor <span class="math inline">\(j\)</span> is relative to the node under consideration <span class="math inline">\(i\)</span></li>
+<li>As result, we get a position embedding as a sinusoidal function of the gap <span class="math inline">\(i-j\)</span>.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="message-passing" class="slide level2 centered-title">
+<h2>Message Passing</h2>
+<div style="font-size: 0.65em">
+<ul>
+<li>Lastly, the encoder takes the node and edge features into another MPN to compute the final representations <span class="math inline">\(\left\{\boldsymbol{h}\left(\boldsymbol{a}_i\right)\right\},\left\{\boldsymbol{h}\left(\boldsymbol{b}_j\right)\right\}\)</span> for paratope and epitope residues.</li>
+<li>MPN contains <span class="math inline">\(L\)</span> message passing layers.</li>
+<li>Let <span class="math inline">\(\mathcal{N}_i\)</span> be the set of neighbor nodes for residue <span class="math inline">\(\boldsymbol{a}_i\)</span></li>
+<li>MPN layer consists of a standard message passing step followed by an aggregation step with residual connection.</li>
+<li><span class="math inline">\(\mathcal{G}_{a, b}^A\)</span> is encoded by a MPN which learns a vector representation <span class="math inline">\(\boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right), \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)\)</span> for each paratope atom <span class="math inline">\(\boldsymbol{a}_{i, k}\)</span> and epitope atom <span class="math inline">\(\boldsymbol{b}_{j, l}\)</span>.</li>
+<li><span class="math display">\[
+  \boldsymbol{h}_{l+1}\left(\boldsymbol{a}_i\right)=\boldsymbol{h}_l\left(\boldsymbol{a}_i\right)+\sum_{j \in \mathcal{N}_i} \operatorname{FFN}\left(\boldsymbol{h}_l\left(\boldsymbol{a}_i\right), \boldsymbol{h}_l\left(\boldsymbol{a}_j\right), \boldsymbol{f}\left(\boldsymbol{a}_j\right), \boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)\right) \quad(0 \leq l&lt;L)
+  \]</span></li>
+<li><span class="math inline">\(\boldsymbol{h}_l\left(\boldsymbol{a}_i\right)\)</span> is the vector representation of the <span class="math inline">\(i\)</span>-th atom <span class="math inline">\(\boldsymbol{a}_i\)</span> after <span class="math inline">\(l\)</span> message passing steps.</li>
+</ul>
+</div>
+</section>
+<section id="summary-of-hierarchical-encoding" class="slide level2 centered-title">
+<h2>Summary of Hierarchical Encoding</h2>
+<ul>
+<li>hierarchical encoder outputs a set of residue representations <span class="math inline">\(\left\{\boldsymbol{h}\left(\boldsymbol{a}_i\right), \boldsymbol{h}\left(\boldsymbol{b}_j\right)\right\}\)</span> and atom representations <span class="math inline">\(\left\{\boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right), \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)\right\}\)</span>.</li>
+<li>Crucially, the whole encoding process is rotation and translation invariant.</li>
+</ul>
+</section>
+<section id="step-2---iterative-refinement" class="slide level2 centered-title">
+<h2>Step 2 - Iterative Refinement</h2>
+<div style="font-size: 0.65em">
+<ul>
+<li class="fragment">Directly predicting the 3D coordinates by <span class="math inline">\(x_i=U h_i \in \mathbb{R}^3\)</span> is not equivariant to epitope rotation and translation. <img data-src="HERN_files/images/HERN_step_2_0.PNG" class="absolute fragment fade-in" style="bottom: 10px; right: 400px; width: 300px; "></li>
+<li class="fragment">Instead, we need an equivariant update</li>
+<li class="fragment"><span class="math inline">\(x_i \leftarrow x_i+\sum_j \underbrace{\phi_x\left(h_i, h_j\right)\left(x_i-x_j\right)}_{\text {Force }}\)</span> <img data-src="HERN_files/images/HERN_step_2_1.PNG" class="absolute fragment fade-in" style="bottom: 10px; right: 400px; width: 300px; "></li>
+<li class="fragment">If we rotate the epitope, the force vector will rotate correspondingly</li>
+</ul>
 </div>
 </section></section>
 <section>
-<section id="hern" class="title-slide slide level1 centered-title center">
-<h1>HERN</h1>
+<section id="hern-architecture" class="title-slide slide level1 centered-title center">
+<h1>HERN Architecture</h1>
 <style>
 /* Center slice title */
 .centered-title {
@@ -734,231 +1131,47 @@
 </section>
 </section></section>
 <section>
-<section id="equations" class="title-slide slide level1 center">
-<h1>Equations</h1>
+<section id="results-and-discussion" class="title-slide slide level1 center">
+<h1>Results and Discussion</h1>
 
-</section>
-<section id="equation-1" class="slide level2">
-<h2>equation 1</h2>
-<ul>
-<li class="fragment">A paratope is a sequence of residuesin the complementarity determining regions (CDRs) of an antibody:
-<ul>
-<li class="fragment"><span class="math inline">\(\boldsymbol{a}=\boldsymbol{a}_1 \cdots a_n\)</span></li>
-</ul></li>
-<li class="fragment">An epitope is composed of <span class="math inline">\(m\)</span> residues that are closest to a paratope:
-<ul>
-<li class="fragment"><span class="math inline">\(\boldsymbol{b}=\boldsymbol{b}_1 \boldsymbol{b}_2 \cdots \boldsymbol{b}_m\)</span></li>
-<li class="fragment">It is a subsequence of an antigen:
-<ul>
-<li class="fragment"><span class="math inline">\(\boldsymbol{c}=\boldsymbol{c}_1 \boldsymbol{c}_2 \cdots \boldsymbol{c}_M\)</span>,</li>
-<li class="fragment">where <span class="math inline">\(\boldsymbol{b}_i=\boldsymbol{c}_{e_i}\)</span> and <span class="math inline">\(e_i\)</span> is the index of epitope residue <span class="math inline">\(\boldsymbol{b}_i\)</span> in the antigen.</li>
-</ul></li>
-</ul></li>
-</ul>
-</section>
-<section id="equation-2" class="slide level2">
-<h2>equation 2</h2>
-<div style="font-size: 0.85em">
-<ul>
-<li class="fragment">The epitope 3D structure <span class="math inline">\(\mathcal{G}_b\)</span> is described as a point cloud of atoms:
-<ul>
-<li class="fragment"><span class="math inline">\(\left\{\boldsymbol{b}_{i, j}\right\}_{1 \leq i \leq m, 1 \leq j \leq n_i}\)</span>
-<ul>
-<li class="fragment">where <span class="math inline">\(n_i\)</span> is the number of atoms in residue <span class="math inline">\(\boldsymbol{b}_i\)</span>.</li>
-</ul></li>
-</ul></li>
-<li class="fragment">The 3D structure of a paratope and a paratope-epitope binding interface is denoted as <span class="math inline">\(\mathcal{G}_a\)</span> and <span class="math inline">\(\mathcal{G}_{a, b}\)</span>, respectively.
-<ul>
-<li class="fragment">The first four atoms in any residue correspond to its backbone atoms <span class="math inline">\(\left(\mathrm{N}, \mathrm{C}_\alpha, \mathrm{C}, \mathrm{O}\right)\)</span> and the rest are its side chain atoms.</li>
-<li class="fragment">The 3D coordinate of an atom <span class="math inline">\(\boldsymbol{b}_{i, k}\)</span> is denoted as <span class="math inline">\(\boldsymbol{x}\left(\boldsymbol{b}_{i, k}\right) \in \mathbb{R}^3\)</span>.</li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="paratope-docking-and-generation-formulated-as-a-joint-3d-point-cloud-completion-task" class="slide level2 slide-title-60 centered-title">
-<h2>Paratope Docking and Generation Formulated as a Joint 3D Point Cloud Completion Task</h2>
-<div>
-<ul>
-<li>Given a training set of antibody-antigen complexes, HERN learns to append an epitope structure <span class="math inline">\(\mathcal{G}_b\)</span> with paratope atoms to form a binding interface <span class="math inline">\(\mathcal{G}_{a, b}\)</span>.</li>
-<li><b>put image here</b></li>
-</ul>
-</div>
-</section>
-<section id="selecting-epitope-residues" class="slide level2">
-<h2>Selecting Epitope Residues</h2>
-<ul>
-<li class="fragment">The paratope-epitope binding interface is defined as the set of atoms that are within a distance <span class="math inline">\(d\)</span> of each other:
-<ul>
-<li class="fragment"><span class="math inline">\(\mathcal{G}_{a, b}=\left\{\boldsymbol{a}_{i, j} \mid \boldsymbol{a}_{i, j} \in \mathcal{G}_a, \boldsymbol{b}_{i, k} \in \mathcal{G}_b, \left\|\boldsymbol{x}\left(\boldsymbol{a}_{i, j}\right)-\boldsymbol{x}\left(\boldsymbol{b}_{i, k}\right)\right\| \leq d\right\}\)</span></li>
-</ul></li>
-<li class="fragment">The paratope-epitope binding interface is a subset of the paratope 3D structure <span class="math inline">\(\mathcal{G}_a\)</span>.</li>
-</ul>
-</section>
-<section id="atom-level-interface-encoder" class="slide level2">
-<h2>ATOM-LEVEL INTERFACE ENCODER</h2>
-<ul>
-<li class="fragment">The atom-level encoder keeps all the atoms in the point cloud <span class="math inline">\(\mathcal{G}_{a, b}\)</span> and constructs a <span class="math inline">\(K\)</span> nearest neighbor graph <span class="math inline">\(\mathcal{G}_{a, b}^A\)</span>. Each node feature is a one-hot encoding of its atom name (e.g., N, <span class="math inline">\(\mathrm{C}_\alpha, \mathrm{C}_\beta, \mathrm{O}\)</span> ).</li>
-<li class="fragment">Each edge feature between two atoms <span class="math inline">\(\left(\boldsymbol{a}_{i, k}, \boldsymbol{b}_{j, l}\right)\)</span> is represented as:
-<ul>
-<li class="fragment"><span class="math display">\[
-\boldsymbol{f}\left(\boldsymbol{a}_{i, k}, \boldsymbol{b}_{j, l}\right)=\operatorname{RBF}\left(\left\|\boldsymbol{x}\left(\boldsymbol{a}_{i, k}\right)-\boldsymbol{x}\left(\boldsymbol{b}_{j, l}\right)\right\|\right)
-\]</span></li>
-</ul></li>
-</ul>
-</section>
-<section id="residue-level-interface-encoder" class="slide level2">
-<h2>RESIDUE-LEVEL INTERFACE ENCODER</h2>
-<div style="font-size: 0.55em">
-<ul>
-<li class="fragment">The residue-level encoder only keeps the <span class="math inline">\(\mathrm{C}_\alpha\)</span> atoms and constructs a <span class="math inline">\(K\)</span> nearest neighbor graph <span class="math inline">\(\mathcal{G}_{a, b}^R\)</span> at the residue level.</li>
-<li class="fragment">Each residue is represented by a feature vector <span class="math inline">\(\boldsymbol{f}\left(\boldsymbol{a}_i\right)\)</span> including:
-<ul>
-<li class="fragment">Amino acid features. Each amino acid is represented by six features:
-<ul>
-<li class="fragment">polarity <span class="math inline">\(f_p \in\{0,1\}\)</span></li>
-<li class="fragment">hydropathy <span class="math inline">\(f_h \in[-4.5,4.5]\)</span></li>
-<li class="fragment">volume <span class="math inline">\(f_v \in[60.1,227.8]\)</span></li>
-<li class="fragment">charge <span class="math inline">\(f_c \in\{-1,0,1\}\)</span></li>
-<li class="fragment">whether it is a hydrogen bond donor <span class="math inline">\(f_d \in\{0,1\}\)</span> or acceptor <span class="math inline">\(f_a \in\{0,1\}\)</span>.</li>
-</ul></li>
-<li class="fragment">For hydropathy and volume features, the radial basis is expanded with interval size 0.1 and 10, respectively</li>
-<li class="fragment">→ amino acid feature with 112 dimensions.</li>
-</ul></li>
-<li class="fragment">It then concatenates the amino acid features with the sum of atom-level <span class="math inline">\(\boldsymbol {h}\left(\boldsymbol{a}_{i, k}\right)\)</span> within that residue as the initial residue representation: <span class="math display">\[
-\begin{aligned}
-\tilde{\boldsymbol{f}}\left(\boldsymbol{a}_i\right) &amp; =\boldsymbol{f}\left(\boldsymbol{a}_i\right) \oplus \sum_k \boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right) \\
-\tilde{\boldsymbol{f}}\left(\boldsymbol{b}_j\right) &amp; =\boldsymbol{f}\left(\boldsymbol{b}_j\right) \oplus \sum_l \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)
-\end{aligned}
-\]</span></li>
-</ul>
-</div>
-</section>
-<section id="residue-level-edge-features" class="slide level2">
-<h2>Residue-level edge features</h2>
-<div style="font-size: 0.65em">
-<ul>
-<li class="fragment">Next, it builds a local coordinate frame for each residue and compute edge features <span class="math inline">\(\boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)\)</span> describing the distance, direction, and orientation between nearby residues (Ingraham et al., 2019).</li>
-<li class="fragment">The local coordinate frame for each residue <span class="math inline">\(\boldsymbol{a}_i\)</span> is defined as <span class="math inline">\(\boldsymbol{O}_i=\left[\boldsymbol{c}_i, \boldsymbol{n}_i, \boldsymbol{c}_i \times \boldsymbol{n}_i\right]\)</span>, where:
-<ul>
-<li class="fragment"><span class="math inline">\(\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}\)</span></li>
-<li class="fragment"><span class="math inline">\(\quad \boldsymbol{c}_i=\frac{\boldsymbol{u}_i-\boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i-\boldsymbol{u}_{i+1}\right\|}\)</span></li>
-<li class="fragment"><span class="math inline">\(\quad \boldsymbol{n}_i=\frac{\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}\right\|}\)</span></li>
-</ul></li>
-</ul>
-</div>
-</section>
-<section id="relative-spatial-encodings" class="slide level2">
-<h2>Relative Spatial Encodings</h2>
-<div style="font-size: 0.5em">
-<ul>
-<li class="fragment">Ingraham <em>et al.</em><span class="citation" data-cites="Ingraham2019-bx"><sup><a href="#/refernces" role="doc-biblioref" onclick="">1</a></sup></span> developed invariant and locally informative features</li>
-<li class="fragment">by augmenting <span class="math inline">\(\boldsymbol{x}_i\)</span> with ‘orientations’ <span class="math inline">\(\boldsymbol{O}_i\)</span>; defined in terms of the backbone geometry as: <span class="math display">\[
-\boldsymbol{O}_i=\left[\begin{array}{lll}
-\boldsymbol{b}_i &amp; \boldsymbol{n}_i &amp; \boldsymbol{b}_i \times \boldsymbol{n}_i
-\end{array}\right],
-\]</span></li>
-<li class="fragment">where <span class="math inline">\(\boldsymbol{b}_i\)</span> is the negative bisector of angle between the rays <span class="math inline">\(\left(\boldsymbol{x}_{i-1}-\boldsymbol{x}_i\right)\)</span> and <span class="math inline">\(\left(\boldsymbol{x}_{i+1}-\boldsymbol{x}_i\right)\)</span>, and <span class="math inline">\(\boldsymbol{n}_i\)</span> is a unit vector normal to that plane.</li>
-<li class="fragment">Formally: <span class="math display">\[
-\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}, \quad \boldsymbol{b}_i=\frac{\boldsymbol{u}_i-\boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i-\boldsymbol{u}_{i+1}\right\|}, \quad \boldsymbol{n}_i=\frac{\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}}{\left\|\boldsymbol{u}_i \times \boldsymbol{u}_{i+1}\right\|}
-\]</span></li>
-<li class="fragment">Finally, they derived the spatial edge features <span class="math inline">\(e_{i j}^{(s)}\)</span> from the rigid body transformation that relates reference frame <span class="math inline">\(\left(\boldsymbol{x}_i, \boldsymbol{O}_i\right)\)</span> to reference frame <span class="math inline">\(\left(\boldsymbol{x}_j, \boldsymbol{O}_j\right)\)</span>.</li>
-<li class="fragment">Then, decomposed it into features for distance, direction, and orientation as <span class="math display">\[
-\boldsymbol{e}_{i j}^{(s)}=\left(\mathbf{RBF}\left(\left\|\boldsymbol{x}_j-\boldsymbol{x}_i\right\|\right), \quad \boldsymbol{O}_i^T \frac{\boldsymbol{x}_j-\boldsymbol{x}_i}{\left\|\boldsymbol{x}_j-\boldsymbol{x}_i\right\|}, \quad \mathbf{q}\left(\boldsymbol{O}_i^T \boldsymbol{O}_j\right)\right)
-\]</span></li>
-<li class="fragment">Here the first vector is a distance encoding <span class="math inline">\(\mathbf{RBF}(\cdot)\)</span> lifted into a radial basis, the second vector is a direction encoding that corresponds to the relative direction of <span class="math inline">\(\boldsymbol{x}_j\)</span> in the reference frame of <span class="math inline">\(\left(\boldsymbol{x}_i, \boldsymbol{O}_i\right)\)</span>, and the third vector is an orientation encoding <span class="math inline">\(\mathbf{q}(\cdot)\)</span> of the quaternion representation of the spatial rotation matrix <span class="math inline">\(\boldsymbol{O}_i^T \boldsymbol{O}_j\)</span>.</li>
-</ul>
-</div>
-<aside class="notes">
-<ul>
-<li>by first augmenting the points <span class="math inline">\(\boldsymbol{x}_i\)</span> with ‘orientations’ <span class="math inline">\(\boldsymbol{O}_i\)</span> that define a local coordinate system at each point; defined in terms of the backbone geometry as</li>
-<li></li>
-<li><span class="math inline">\(\boldsymbol{u}_i=\frac{\boldsymbol{x}_i-\boldsymbol{x}_{i-1}}{\left\|\boldsymbol{x}_i-\boldsymbol{x}_{i-1}\right\|}\)</span> is the direction.</li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-<div class="slide-footer">
-[1] Ingraham <em>et al.</em>, Adv. Neural Inf. Process. Syst., 2019, <a href="https://papers.nips.cc/paper_files/paper/2019/hash/f3a4ff4839c56a5f460c88cce3666a2b-Abstract.html" target="_blank">DOI</a>
-</div>
-</section>
-<section id="quaternions" class="slide level2 centered-title scrollable">
-<h2>Quaternions</h2>
-<div style="font-size: 0.75em">
-<ul>
-<li class="fragment">Quaternions represent 3D rotations as four-element vectors that can be efficiently and reasonably compared by inner products.</li>
-<li class="fragment">utilises complex numbers for geometric transformations/rotations in 3D space</li>
-<li class="fragment">Better than Euler angles
-<ul>
-<li class="fragment">Does not suffer from Gimble Lock
-<ul>
-<li class="fragment">Gimble Lock is the case when the Euler angles are not unique and the rotation is not well defined</li>
-</ul></li>
-</ul></li>
-</ul>
-</div>
 </section>
 <section id="section-2" class="slide level2">
 <h2></h2>
-<p><video data-src="HERN_files/animations/Quaternions.mp4" controls=""><a href="HERN_files/animations/Quaternions.mp4">Video</a></video></p>
-<div class="footer">
-<p><a href="https://eater.net/quaternions"><b>3blue1brown</b></a></p>
-</div>
-</section>
-<section id="edge-feature-computation" class="slide level2">
-<h2>edge feature computation</h2>
-<div style="font-size: 0.65em">
+
+<img data-src="HERN_files/images/hern_table1.PNG" class="r-stretch"></section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+
+<img data-src="HERN_files/images/hern_table2.PNG" class="r-stretch"></section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+
+<img data-src="HERN_files/images/HERN_RESULTS.PNG.PNG" class="r-stretch"></section>
+<section id="issue" class="slide level2">
+<h2>Issue</h2>
 <ul>
-<li class="fragment">Based on the local frame, we compute the following edge features
+<li>Only models CDRH3
 <ul>
-<li class="fragment"><span class="math display">\[
-\boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)=\left(E_{\mathrm{pos}}(i-j), \quad \operatorname{RBF}\left(\left\|\boldsymbol{x}_{i, 1}-\boldsymbol{x}_{j, 1}\right\|\right), \quad \boldsymbol{O}_i^{\top} \frac{\boldsymbol{x}_{j, 1}-\boldsymbol{x}_{i, 1}}{\left\|\boldsymbol{x}_{i, 1}-\boldsymbol{x}_{j, 1}\right\|}, \quad \boldsymbol{q}\left(\boldsymbol{O}_i^{\top} \boldsymbol{O}_j\right)\right)
-\]</span></li>
+<li>Dvelopability!?</li>
 </ul></li>
+<li>Uses IgFold+HDOCK for comparison</li>
+<li>Does not model end-to-end</li>
 </ul>
-</div>
-<aside class="notes">
-<ul>
-<li><u><b>Relative positional encodings</b></u>:
-<ul>
-<li>As in the original Transformer, we also represent distances between residues in the sequence (rather than space) with positional embeddings <span class="math inline">\(\boldsymbol{e}_{i j}^{(p)}\)</span>.</li>
-<li>Positioning of each neighbor <span class="math inline">\(j\)</span> is relative to the node under consideration <span class="math inline">\(i\)</span></li>
-<li>As result, we get a position embedding as a sinusoidal function of the gap <span class="math inline">\(i-j\)</span>.</li>
-</ul></li>
-</ul>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
-<section id="message-passing" class="slide level2">
-<h2>Message Passing</h2>
-<div style="font-size: 0.65em">
-<ul>
-<li class="fragment"><span class="math inline">\(\mathcal{G}_{a, b}^A\)</span> is encoded by a MPN which learns a vector representation <span class="math inline">\(\boldsymbol{h}\left(\boldsymbol{a}_{i, k}\right), \boldsymbol{h}\left(\boldsymbol{b}_{j, l}\right)\)</span> for each paratope atom <span class="math inline">\(\boldsymbol{a}_{i, k}\)</span> and epitope atom <span class="math inline">\(\boldsymbol{b}_{j, l}\)</span>.</li>
-<li class="fragment"><span class="math display">\[
-  \boldsymbol{h}_{l+1}\left(\boldsymbol{a}_i\right)=\boldsymbol{h}_l\left(\boldsymbol{a}_i\right)+\sum_{j \in \mathcal{N}_i} \operatorname{FFN}\left(\boldsymbol{h}_l\left(\boldsymbol{a}_i\right), \boldsymbol{h}_l\left(\boldsymbol{a}_j\right), \boldsymbol{f}\left(\boldsymbol{a}_j\right), \boldsymbol{f}\left(\boldsymbol{a}_i, \boldsymbol{a}_j\right)\right) \quad(0 \leq l&lt;L)
-  \]</span></li>
-<li class="fragment"><span class="math inline">\(\boldsymbol{h}_l\left(\boldsymbol{a}_i\right)\)</span> is the vector representation of the <span class="math inline">\(i\)</span>-th atom <span class="math inline">\(\boldsymbol{a}_i\)</span> after <span class="math inline">\(l\)</span> message passing steps.</li>
-</ul>
-</div>
-</section>
-<section id="refernces" class="slide level2 smaller scrollable">
-<h2>Refernces</h2>
+<section id="section-5" class="slide level2">
+<h2></h2>
+
+<img data-src="HERN_files/images/Fv_models_RMSD-comparisons.PNG" class="r-stretch"></section>
+<section id="section-6" class="slide level2">
+<h2></h2>
+
+<img data-src="HERN_files/images/CDRH3_models_RMSD-comparisons_cropped.png" class="r-stretch"></section>
+<section id="section-7" class="slide level2">
+<h2></h2>
+
+<img data-src="HERN_files/images/Fv_models_RMSD-comparisons.PNG" class="r-stretch"></section></section>
+<section id="refernces" class="title-slide slide level1 smaller scrollable">
+<h1>Refernces</h1>
 <div class="footer footer-default">
 <p><a href="https://github.com/Peji-moghimi/sciprez" class="uri">https://github.com/Peji-moghimi/sciprez</a></p>
 </div>
@@ -1021,7 +1234,7 @@
 <div class="csl-left-margin">19. </div><div class="csl-right-inline">Jin, W., Barzilay, R. &amp; Jaakkola, T. <a href="https://arxiv.org/abs/2207.06616"><span>Antibody-Antigen</span> docking and design via hierarchical equivariant refinement</a>. (2022).</div>
 </div>
 </div>
-</section></section>
+</section>
     </div>
   </div>
 
